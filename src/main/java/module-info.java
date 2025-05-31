@@ -7,7 +7,11 @@ module com.example.examify {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires org.xerial.sqlitejdbc;
 
+    // Otwieramy pakiety z kontrolerami, żeby FXMLLoader mógł je wstrzyknąć
+    opens com.example.examify.ui.controllers to javafx.fxml;
+    // Jeżeli w katalogu com.example.examify masz jakieś @FXML-annotowane klasy:
     opens com.example.examify to javafx.fxml;
     exports com.example.examify;
 }

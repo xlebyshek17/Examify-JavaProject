@@ -13,17 +13,26 @@
             <Font name="Gubbi" size="30.0" />
          </font>
       </Label>
-      <TextField layoutX="171.0" layoutY="121.0" prefHeight="33.0" prefWidth="232.0" promptText="Username" />
-      <TextField layoutX="171.0" layoutY="169.0" prefHeight="33.0" prefWidth="232.0" promptText="Email" />
-      <TextField layoutX="171.0" layoutY="217.0" prefHeight="33.0" prefWidth="232.0" promptText="Password" />
-      <Button layoutX="202.0" layoutY="285.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="171.0" text="Sign Up" textFill="#5b0808">
+      <TextField layoutX="171.0" layoutY="121.0" prefHeight="35.0" prefWidth="230.0" promptText="Username">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <TextField layoutX="171.0" layoutY="169.0" prefHeight="35.0" prefWidth="230.0" promptText="Email">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <TextField layoutX="171.0" layoutY="217.0" prefHeight="35.0" prefWidth="230.0" promptText="Password">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <Button layoutX="202.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Sign Up" textFill="#5b0808">
          <font>
             <Font name="Gubbi" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="11.0" layoutY="9.0" mnemonicParsing="false" onAction="#onButtonBackClick" text="Button" textFill="#6b0808">
+      <Button layoutX="11.0" layoutY="9.0" mnemonicParsing="false" onAction="#onButtonBackClick" prefHeight="35.0" prefWidth="75.0" text="Back" textFill="#6b0808">
          <font>
-            <Font name="Gubbi" size="14.0" />
+            <Font name="Gargi" size="14.0" />
          </font>
       </Button>
    </children>
