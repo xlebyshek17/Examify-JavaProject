@@ -26,11 +26,12 @@ public class DBUtil {
              Statement s = c.createStatement()
         ) {
             s.execute("""
-            CREATE TABLE IF NOT EXISTS students (
+            CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE NOT NULL,
                 email TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL
+                password_hash TEXT NOT NULL,
+                is_admin BOOLEAN NOT NULL DEFAULT FALSE
             );
             """);
             s.execute("""
@@ -44,11 +45,11 @@ public class DBUtil {
             s.execute("""
             CREATE TABLE IF NOT EXISTS exams (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
-               student_id INTEGER NOT NULL,
+               user_id INTEGER NOT NULL,
                start_time DATETIME,
                end_time DATETIME,
                score REAL,
-               FOREIGN KEY (student_id) REFERENCES students (id)
+               FOREIGN KEY (user_id) REFERENCES users (id)
             );
            """);
             s.execute("""
