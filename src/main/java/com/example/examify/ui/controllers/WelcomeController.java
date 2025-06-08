@@ -18,7 +18,7 @@ public class WelcomeController {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/examify/fxml/login-view.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(newRoot));
-        stage.setTitle("Examify — Logowanie");
+        stage.setTitle("Examify");
         stage.show();
     }
 
@@ -27,7 +27,7 @@ public class WelcomeController {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/examify/fxml/signup-view.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(newRoot));
-        stage.setTitle("Examify — Registration");
+        stage.setTitle("Examify");
         stage.show();
     }
 }
