@@ -29,28 +29,20 @@ public class UserDAO {
         return Optional.empty();
     }
 
-    public Optional<User> findByUsername(String username) {
-        String query = "SELECT id, username, email, password_hash, is_admin FROM users WHERE username = ?";
-        return getUser(username, query);
-    }
-
-    public Optional<User> findByEmail(String email) {
-        String query = "SELECT id, username, email, password_hash, is_admin FROM users WHERE email = ?";
-        return getUser(email, query);
-    }
-
-    private Optional<User> getUser(String email, String query) {
+    public Optional<User> findByLogin(String login) {
+        String query = "SELECT id, username, email, password_hash, is_admin FROM users WHERE username = ? OR email = ?";
         try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
-                ps.setString(1, email);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        User user = mapRowtoUser(rs);
-                        return Optional.of(user);
-                    }
+            PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, login);
+            ps.setString(2, login);
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = mapRowtoUser(rs);
+                    return Optional.of(user);
                 }
+            }
         } catch (SQLException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
 
         return Optional.empty();
