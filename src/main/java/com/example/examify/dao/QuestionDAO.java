@@ -24,8 +24,10 @@ public class QuestionDAO {
                         rs.getInt("id"),
                         rs.getString("text"),
                         rs.getString("type"),
-                        rs.getString("options")      // „A;B;C;D”
+                        rs.getString("options"),
+                        rs.getString("correct_answer")
                 ));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

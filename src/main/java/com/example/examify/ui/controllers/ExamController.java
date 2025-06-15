@@ -4,7 +4,11 @@ import com.example.examify.dao.QuestionDAO;
 import com.example.examify.model.Question;
 import com.example.examify.model.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +44,7 @@ public class ExamController {
         String chosen = selected.getText();
         Question q = questions.get(index);
 
-        if (chosen.equals(q.getCorrectOption())) score++;
+        if (chosen.equals(q.getCorrectAnswer())) score++;
 
         index++;
         if (index < questions.size()) {
@@ -56,7 +60,7 @@ public class ExamController {
         List<String> opts = new ArrayList<>(q.getOptionList());
         Collections.shuffle(opts); // losowa kolejność odpowiedzi
 
-//        correctAnswer = q.getCorrectOption();
+
         questionLabel.setText((index + 1) + ". " + q.getText());
         optionA.setText(opts.get(0));
         optionB.setText(opts.get(1));
@@ -68,11 +72,18 @@ public class ExamController {
     }
 
     private void finishExam() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Wynik egzaminu");
-        alert.setHeaderText("Twoje punkty: " + score + " / " + questions.size());
-        alert.setContentText("Gratulacje, " + user.getUsername() + "!");
-        alert.setOnHidden(e -> questionLabel.getScene().getWindow().hide()); // zamknij okno egzaminu
-        alert.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/result-view.fxml"));
+            Parent root = loader.load();
+
+            ResultController controller = loader.getController();
+            controller.setScore(score, questions.size());
+
+            Stage stage = (Stage) questionLabel.getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
