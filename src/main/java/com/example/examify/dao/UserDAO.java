@@ -4,10 +4,9 @@ import com.example.examify.model.User;
 import com.example.examify.util.DBUtil;
 
 import java.nio.DoubleBuffer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDAO {
@@ -78,5 +77,37 @@ public class UserDAO {
                         rs.getString("email"),
                         rs.getString("password_hash"),
                         rs.getBoolean("is_admin"));
+    }
+
+    public static List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users";
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("username"));
+                u.setEmail(rs.getString("email"));
+                u.setAdmin(rs.getBoolean("is_admin"));
+                users.add(u);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public static void updateAdminStatus(int userId, boolean isAdmin) {
+        String sql = "UPDATE users SET is_admin = ? WHERE id = ?";
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, isAdmin);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
