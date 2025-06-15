@@ -17,5 +17,5 @@ module com.example.examify {
     opens com.example.examify to javafx.fxml;
     exports com.example.examify;
 
-    opens com.example.examify.model to javafx.base;
+//    opens com.example.examify.model to javafx.base;
 }

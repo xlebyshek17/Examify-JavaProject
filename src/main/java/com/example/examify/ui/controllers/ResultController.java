@@ -22,6 +22,9 @@ public class ResultController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/student-view.fxml"));
             Parent root = loader.load();
 
+//            StudentController controller = loader.getController();
+//            controller.setUser(optUser.get(););
+
             Stage stage = (Stage) scoreLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (Exception e) {
