@@ -137,6 +137,7 @@ public class ExamController {
 
             ResultController controller = loader.getController();
             controller.setScore(score, questions.size());
+            controller.setUser(user);
 
             Stage stage = (Stage) questionLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
