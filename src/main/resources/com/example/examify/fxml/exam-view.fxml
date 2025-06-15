@@ -35,7 +35,7 @@
         </VBox>
 
         <!-- Pasek postępu -->
-        <Label fx:id="progressLabel" styleClass="exam-progress"/>
+        <Label fx:id="progressLabel"/>
 
         <!-- Przycisk -->
         <Button text="Dalej" onAction="#handleNext" prefWidth="150"/>
