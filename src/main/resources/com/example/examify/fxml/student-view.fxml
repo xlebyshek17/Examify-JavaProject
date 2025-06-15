@@ -7,11 +7,12 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.StudentController">
    <children>
-      <Label fx:id="welcomeLabel" text="Witaj, użytkowniku!" prefWidth="600.0" prefHeight="400.0"  alignment="CENTER">
+      <Label fx:id="welcomeLabel" text="Witaj, użytkowniku!" prefWidth="600.0" prefHeight="250.0"  alignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
+      <Button fx:id="historyButton" layoutX="225" layoutY="230" prefHeight="50.0" prefWidth="150.0" text="Historia egzaminów" onAction="#handleShowHistory" />
       <Button layoutX="225" layoutY="300" prefHeight="50.0" prefWidth="150.0" text="Rozpocznij egzamin" onAction="#startExam"/>
       <Button layoutX="511.0" layoutY="14.0" mnemonicParsing="false" onAction="#onButtonLogOutClick" prefHeight="35.0" prefWidth="75.0" text="Log out" textFill="#6b0808">
          <font>
