@@ -37,17 +37,12 @@ public class LoginController {
             User user = optUser.get();
 
             String fxmlPath = user.isAdmin() ? "/com/example/examify/fxml/admin-view.fxml" : "/com/example/examify/fxml/student-view.fxml";
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent newRoot = loader.load();
-
-            if (!user.isAdmin()) {
-                StudentController controller = loader.getController();
-                controller.setUser(user);
-            }
+            Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(newRoot));
             stage.show();
+            stage.centerOnScreen();
         }
         else {
             errorField.setText("Login or password is incorrect");

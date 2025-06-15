@@ -39,7 +39,8 @@ public class DBUtil {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 text TEXT NOT NULL,
                 type TEXT NOT NULL,
-                options TEXT
+                options TEXT,
+                correct_answer TEXT
             );
             """);
             s.execute("""
