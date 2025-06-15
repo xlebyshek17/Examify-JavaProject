@@ -10,6 +10,7 @@ module com.example.examify {
     requires org.xerial.sqlitejdbc;
     requires jbcrypt;
 
+    opens com.example.examify.model to javafx.base;
     // Otwieramy pakiety z kontrolerami, żeby FXMLLoader mógł je wstrzyknąć
     opens com.example.examify.ui.controllers to javafx.fxml;
     // Jeżeli w katalogu com.example.examify masz jakieś @FXML-annotowane klasy:
