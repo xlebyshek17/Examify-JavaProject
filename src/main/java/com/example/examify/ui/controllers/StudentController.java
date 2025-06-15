@@ -49,9 +49,6 @@ public class StudentController {
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Dopiero po załadowaniu sceny uruchom logikę egzaminu
-            controller.startExam();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
