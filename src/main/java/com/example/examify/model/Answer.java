@@ -7,13 +7,18 @@ public class Answer {
     private String answer;
     private boolean isCorrect;
 
-    Answer(int id, int examId, int questionId, String answer, boolean isCorrect) {
+    public Answer(int id, int examId, int questionId, String answer, boolean isCorrect) {
         this.id = id;
         this.examId = examId;
         this.questionId = questionId;
         this.answer = answer;
         this.isCorrect = isCorrect;
     }
+
+    public Answer(int examId, int questionId, String answer, boolean isCorrect) {
+        this(0, examId, questionId, answer, isCorrect);
+    }
+
 
     public int getId() {
         return id;

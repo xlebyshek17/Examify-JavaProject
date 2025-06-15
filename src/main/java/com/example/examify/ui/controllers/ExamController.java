@@ -1,6 +1,10 @@
 package com.example.examify.ui.controllers;
 
+import com.example.examify.dao.AnswerDAO;
+import com.example.examify.dao.ExamDAO;
 import com.example.examify.dao.QuestionDAO;
+import com.example.examify.model.Answer;
+import com.example.examify.model.Exam;
 import com.example.examify.model.Question;
 import com.example.examify.model.User;
 import javafx.fxml.FXML;
@@ -10,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +27,10 @@ public class ExamController {
     @FXML private ToggleGroup optionsGroup;
     @FXML private Label progressLabel;
 
+    private LocalDateTime startTime;
+    private List<Answer> givenAnswers = new ArrayList<>();
+
+
     // ===== logika =====
     private User user;
     private List<Question> questions;
@@ -31,6 +40,7 @@ public class ExamController {
     // ===== API wywoływane z StudentController =====
     public void setUser(User user) { this.user = user; }
     public void startExam() {
+        startTime = LocalDateTime.now();
         questions = QuestionDAO.getRandomQuestions(5);
         showQuestion();
     }
@@ -45,6 +55,10 @@ public class ExamController {
         Question q = questions.get(index);
 
         if (chosen.equals(q.getCorrectAnswer())) score++;
+
+        Answer ans = new Answer(0, 0, q.getId(), chosen, chosen.equals(q.getCorrectAnswer()));
+        givenAnswers.add(ans);
+
 
         index++;
         if (index < questions.size()) {
@@ -73,6 +87,17 @@ public class ExamController {
 
     private void finishExam() {
         try {
+            LocalDateTime endTime = LocalDateTime.now();
+
+            Exam exam = new Exam(user.getId(), startTime, endTime, score);
+            int examId = ExamDAO.saveExam(exam);
+
+            for (Answer a : givenAnswers) {
+                a.setExamId(examId);
+                AnswerDAO.saveAnswer(a);
+            }
+
+            // Przejdź do widoku wyników
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/result-view.fxml"));
             Parent root = loader.load();
 
@@ -86,4 +111,5 @@ public class ExamController {
             e.printStackTrace();
         }
     }
+
 }

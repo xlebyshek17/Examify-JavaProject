@@ -9,7 +9,7 @@ public class Exam {
     private LocalDateTime endTime;
     private double score;
 
-    Exam(int studentId, LocalDateTime startTime, LocalDateTime endTime, double score) {
+    public Exam(int studentId, LocalDateTime startTime, LocalDateTime endTime, double score) {
         this.studentId = studentId;
         this.startTime = startTime;
         this.endTime = endTime;
