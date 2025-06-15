@@ -1,5 +1,7 @@
 package com.example.examify.model;
 
+import java.util.*;
+
 public class Question {
     private int id;
     private String text;
@@ -47,5 +49,14 @@ public class Question {
 
     public void setOptions(String options) {
         this.options = options;
+    }
+
+    public List<String> getOptionList() {
+        return Arrays.asList(options.split(";"));   // ["A","B","C","D"]
+    }
+
+    /** Pierwsza odpowiedź traktowana jest jako poprawna */
+    public String getCorrectOption() {
+        return getOptionList().get(0);
     }
 }

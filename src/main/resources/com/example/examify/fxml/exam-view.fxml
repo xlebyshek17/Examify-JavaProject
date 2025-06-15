@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.ExamController">
-    <children>
-        <Label fx:id="welcomeLabel" text="Rozpoczynamy egzamin..." prefWidth="600.0" prefHeight="400.0" alignment="CENTER">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.examify.ui.controllers.ExamController"
+            prefHeight="400.0"
+            prefWidth="600.0">
+
+    <!-- Główne okno w centrum -->
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+        <!-- Nagłówek -->
+        <Label fx:id="questionLabel" wrapText="true">
             <font>
-                <Font size="36.0" />
+                <Font name="System Bold" size="20"/>
             </font>
         </Label>
-    </children>
+
+        <!-- Opcje odpowiedzi -->
+        <VBox spacing="10">
+            <fx:define>
+                <ToggleGroup fx:id="optionsGroup"/>
+            </fx:define>
+
+            <RadioButton fx:id="optionA" toggleGroup="$optionsGroup" wrapText="true"/>
+            <RadioButton fx:id="optionB" toggleGroup="$optionsGroup" wrapText="true"/>
+            <RadioButton fx:id="optionC" toggleGroup="$optionsGroup" wrapText="true"/>
+            <RadioButton fx:id="optionD" toggleGroup="$optionsGroup" wrapText="true"/>
+        </VBox>
+
+        <!-- Pasek postępu -->
+        <Label fx:id="progressLabel" styleClass="exam-progress"/>
+
+        <!-- Przycisk -->
+        <Button text="Dalej" onAction="#handleNext" prefWidth="150"/>
+    </VBox>
 </AnchorPane>

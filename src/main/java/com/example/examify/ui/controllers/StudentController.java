@@ -41,7 +41,8 @@ public class StudentController {
 
             // Przypisanie użytkownika
             ExamController controller = loader.getController();
-            controller.setUser(user);  // WAŻNE: najpierw ustaw użytkownika
+            controller.setUser(user);     // ← przekazujemy
+            controller.startExam();       // ← uruchamiamy
 
             // Wyświetlenie nowej sceny
             Stage stage = (Stage) welcomeLabel.getScene().getWindow();
