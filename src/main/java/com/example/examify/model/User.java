@@ -18,6 +18,10 @@ public class User {
         this(0, username, email, passwordHash, false);
     }
 
+    public User() {
+
+    }
+
     public int getId() {
         return id;
     }

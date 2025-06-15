@@ -39,7 +39,6 @@ public class ExamController {
     @FXML private Label timerLabel;
 
     private void startTimer() {
-        System.out.println("TIMER start");
         timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeRemaining--;
             timerLabel.setText("Pozostały czas: " + timeRemaining + " s");
@@ -76,7 +75,6 @@ public class ExamController {
         startTime = LocalDateTime.now();
         questions = QuestionDAO.getRandomQuestions(5);
         showQuestion();
-        System.out.println("TIMER start (se)");
         startTimer();
     }
 
