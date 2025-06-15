@@ -28,6 +28,22 @@ public class HistoryController {
         loadExams();
     }
 
+    private void openAnswerReview(int examId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/answer-review.fxml"));
+            Parent root = loader.load();
+
+            AnswerReviewController controller = loader.getController();
+            controller.setData(examId, user);
+
+            Stage stage = (Stage) examListView.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void loadExams() {
         List<Exam> exams = ExamDAO.getExamsByUserId(user.getId());
 
@@ -39,6 +55,15 @@ public class HistoryController {
                     exam.getScore());
             examListView.getItems().add(line);
         }
+
+        examListView.setOnMouseClicked(event -> {
+            int index = examListView.getSelectionModel().getSelectedIndex();
+            if (index >= 0 && index < exams.size()) {
+                int examId = exams.get(index).getId();
+                openAnswerReview(examId);
+            }
+        });
+
     }
 
     @FXML

@@ -5,18 +5,17 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.examify.ui.controllers.HistoryController"
+            fx:controller="com.example.examify.ui.controllers.AnswerReviewController"
             prefHeight="400.0"
             prefWidth="600.0">
 
-    <VBox spacing="20" alignment="CENTER"
+    <VBox spacing="15" alignment="CENTER"
           AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
           AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
 
-        <Label text="Historia egzaminów"
-               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+        <Label text="Odpowiedzi z egzaminu" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-        <ListView fx:id="examListView" prefHeight="300.0" prefWidth="500.0" />
+        <ListView fx:id="answerListView" prefHeight="400" prefWidth="600"/>
 
         <Button text="Powrót" onAction="#handleBack" prefWidth="150"/>
     </VBox>
