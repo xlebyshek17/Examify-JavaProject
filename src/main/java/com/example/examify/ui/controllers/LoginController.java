@@ -37,7 +37,11 @@ public class LoginController {
             User user = optUser.get();
 
             String fxmlPath = user.isAdmin() ? "/com/example/examify/fxml/admin-view.fxml" : "/com/example/examify/fxml/student-view.fxml";
-            Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent newRoot = loader.load();
+
+            StudentController controller = loader.getController();
+            controller.setUser(user);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(newRoot));
