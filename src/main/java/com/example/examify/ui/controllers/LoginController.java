@@ -42,6 +42,7 @@ public class LoginController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(newRoot));
             stage.show();
+            stage.centerOnScreen();
         }
         else {
             errorField.setText("Login or password is incorrect");
