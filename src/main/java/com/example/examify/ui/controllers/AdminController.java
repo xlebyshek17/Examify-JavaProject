@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AdminController {
+    @FXML
     private StackPane contentPane;
 
     @FXML
@@ -25,17 +26,17 @@ public class AdminController {
 
     @FXML
     public void showExams(ActionEvent actionEvent) {
-        loadView("/com/example/examify/ui/views/admin_exams-view.fxml");
+        loadView("/com/example/examify/fxml/admin_exams-view.fxml");
     }
 
     @FXML
     public void showResults(ActionEvent actionEvent) {
-        loadView("/com/example/examify/ui/views/admin_results-view.fxml");
+        loadView("/com/example/examify/fxml/admin_results-view.fxml");
     }
 
     @FXML
     public void showUsers(ActionEvent actionEvent) {
-        loadView("/com/example/examify/ui/views/admin_users-view.fxml");
+        loadView("/com/example/examify/fxml/admin_users-view.fxml");
     }
 
     private void loadView(String fxmlPath) {
