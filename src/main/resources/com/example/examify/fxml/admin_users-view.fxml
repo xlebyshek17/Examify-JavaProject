@@ -4,12 +4,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminUsersController" stylesheets="@../styles/styles.css">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminUsersController">
    <children>
-      <TableView fx:id="userTable" AnchorPane.topAnchor="0"
-                                    AnchorPane.bottomAnchor="0"
-                                    AnchorPane.leftAnchor="0"
-                                    AnchorPane.rightAnchor="0" >
+      <TableView fx:id="userTable" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
           <TableColumn fx:id="usernameColumn" prefWidth="150.0" text="Username" />
           <TableColumn fx:id="emailColumn" prefWidth="200.0" text="Email" />

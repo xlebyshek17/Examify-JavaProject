@@ -1,9 +1,13 @@
 package com.example.examify.dao;
 
 import com.example.examify.model.Exam;
+import com.example.examify.model.User;
+import com.example.examify.util.DBUtil;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExamDAO {
     private static final String DB_URL = "jdbc:sqlite:exams.db";

@@ -16,6 +16,10 @@ public class Exam {
         this.score = score;
     }
 
+    public Exam() {
+
+    }
+
     public int getId() {
         return id;
     }
