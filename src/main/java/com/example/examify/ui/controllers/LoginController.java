@@ -40,8 +40,10 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent newRoot = loader.load();
 
-            StudentController controller = loader.getController();
-            controller.setUser(user);
+            if (!user.isAdmin()) {
+                StudentController controller = loader.getController();
+                controller.setUser(user);
+            }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(newRoot));
