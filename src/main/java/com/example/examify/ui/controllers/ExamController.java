@@ -7,12 +7,15 @@ import com.example.examify.model.Answer;
 import com.example.examify.model.Exam;
 import com.example.examify.model.Question;
 import com.example.examify.model.User;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,6 +33,36 @@ public class ExamController {
     private LocalDateTime startTime;
     private List<Answer> givenAnswers = new ArrayList<>();
 
+    // ===== timer =====
+    private int timeRemaining = 30; // sekundy
+    private Timeline timer;
+    @FXML private Label timerLabel;
+
+    private void startTimer() {
+        System.out.println("TIMER start");
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            timeRemaining--;
+            timerLabel.setText("Pozostały czas: " + timeRemaining + " s");
+
+            if (timeRemaining <= 0) {
+                timer.stop();
+                autoFinishExam();
+            }
+        }));
+        timer.setCycleCount(timeRemaining);
+        timer.play();
+    }
+
+    private void autoFinishExam() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Koniec czasu");
+        alert.setHeaderText("Czas na egzamin minął!");
+        alert.setContentText("Twój wynik zostanie zapisany.");
+        alert.setOnHidden(e -> finishExam());
+        alert.show();
+    }
+
+
 
     // ===== logika =====
     private User user;
@@ -43,6 +76,8 @@ public class ExamController {
         startTime = LocalDateTime.now();
         questions = QuestionDAO.getRandomQuestions(5);
         showQuestion();
+        System.out.println("TIMER start (se)");
+        startTimer();
     }
 
     // ===== obsługa FXML =====
@@ -87,6 +122,7 @@ public class ExamController {
 
     private void finishExam() {
         try {
+            if (timer != null) timer.stop();
             LocalDateTime endTime = LocalDateTime.now();
 
             Exam exam = new Exam(user.getId(), startTime, endTime, score);
