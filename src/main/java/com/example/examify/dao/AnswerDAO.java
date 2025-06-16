@@ -2,6 +2,7 @@ package com.example.examify.dao;
 
 import com.example.examify.model.Answer;
 import com.example.examify.model.Question;
+import com.example.examify.model.QuestionType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class AnswerDAO {
                 Question q = new Question(
                         rs.getInt("question_id"),
                         rs.getString("text"),
-                        "", "",
+                        QuestionType.valueOf(rs.getString("type").toUpperCase()), "",
                         rs.getString("correct_answer")
                 );
 

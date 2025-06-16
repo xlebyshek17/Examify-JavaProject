@@ -1,12 +1,9 @@
 package com.example.examify.ui.controllers;
 
 import com.example.examify.dao.AnswerDAO;
-import com.example.examify.dao.ExamDAO;
+import com.example.examify.dao.ExamResultDAO;
 import com.example.examify.dao.QuestionDAO;
-import com.example.examify.model.Answer;
-import com.example.examify.model.Exam;
-import com.example.examify.model.Question;
-import com.example.examify.model.User;
+import com.example.examify.model.*;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.fxml.FXML;
@@ -123,8 +120,8 @@ public class ExamController {
             if (timer != null) timer.stop();
             LocalDateTime endTime = LocalDateTime.now();
 
-            Exam exam = new Exam(user.getId(), startTime, endTime, score);
-            int examId = ExamDAO.saveExam(exam);
+            ExamResult exam = new ExamResult(user.getId(), 0, startTime, endTime, score);
+            int examId = ExamResultDAO.saveExam(exam);
 
             for (Answer a : givenAnswers) {
                 a.setExamId(examId);

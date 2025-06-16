@@ -82,7 +82,7 @@ public class UserDAO {
                         rs.getBoolean("is_admin"));
     }
 
-    public static List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
         try (Connection con = DBUtil.getConnection();
@@ -102,7 +102,7 @@ public class UserDAO {
         return users;
     }
 
-    public static void updateAdminStatus(int userId, boolean isAdmin) {
+    public void updateAdminStatus(int userId, boolean isAdmin) {
         String sql = "UPDATE users SET is_admin = ? WHERE id = ?";
         try (Connection con = DBUtil.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

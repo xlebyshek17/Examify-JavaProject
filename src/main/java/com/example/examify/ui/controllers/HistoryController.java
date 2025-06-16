@@ -1,7 +1,8 @@
 package com.example.examify.ui.controllers;
 
-import com.example.examify.dao.ExamDAO;
+import com.example.examify.dao.ExamResultDAO;
 import com.example.examify.model.Exam;
+import com.example.examify.model.ExamResult;
 import com.example.examify.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -45,9 +46,9 @@ public class HistoryController {
 
 
     private void loadExams() {
-        List<Exam> exams = ExamDAO.getExamsByUserId(user.getId());
+        List<ExamResult> exams = ExamResultDAO.getExamsByUserId(user.getId());
 
-        for (Exam exam : exams) {
+        for (ExamResult exam : exams) {
             String line = String.format("[%s] %s–%s   Wynik: %.0f",
                     exam.getStartTime().toLocalDate(),
                     DATE_TIME_FMT.format(exam.getStartTime()),

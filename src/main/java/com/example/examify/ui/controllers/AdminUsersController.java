@@ -2,6 +2,7 @@ package com.example.examify.ui.controllers;
 
 import com.example.examify.model.User;
 import com.example.examify.dao.UserDAO;
+import com.example.examify.service.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -19,6 +20,8 @@ public class AdminUsersController {
     @FXML private TableColumn<User, Boolean> isAdminColumn;
     @FXML private TableColumn<User, Void> actionColumn;
 
+    private final UserService userService = new UserService();
+
     @FXML
     public void initialize() {
         usernameColumn.prefWidthProperty().bind(userTable.widthProperty().multiply(0.25));
@@ -34,7 +37,7 @@ public class AdminUsersController {
     }
 
     private void loadUsers() {
-        List<User> users = UserDAO.getAllUsers();
+        List<User> users = userService.getAllUsers();
         userTable.getItems().setAll(users);
     }
 
@@ -50,7 +53,7 @@ public class AdminUsersController {
                     User user = getTableView().getItems().get(getIndex());
                     boolean newStatus = !user.isAdmin();
 
-                    UserDAO.updateAdminStatus(user.getId(), newStatus);
+                    userService.updateAdminStatus(user.getId(), newStatus);
 
                     user.setAdmin(newStatus);
 

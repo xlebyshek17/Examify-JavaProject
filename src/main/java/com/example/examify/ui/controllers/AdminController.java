@@ -24,6 +24,7 @@ public class AdminController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(newRoot));
         stage.show();
+        stage.centerOnScreen();
     }
 
     @FXML

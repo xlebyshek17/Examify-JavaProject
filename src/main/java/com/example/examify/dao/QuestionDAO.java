@@ -1,6 +1,7 @@
 package com.example.examify.dao;
 
 import com.example.examify.model.Question;
+import com.example.examify.model.QuestionType;
 
 import java.sql.*;
 import java.util.*;
@@ -23,7 +24,7 @@ public class QuestionDAO {
                 list.add(new Question(
                         rs.getInt("id"),
                         rs.getString("text"),
-                        rs.getString("type"),
+                        QuestionType.valueOf(rs.getString("type").toUpperCase()),
                         rs.getString("options"),
                         rs.getString("correct_answer")
                 ));

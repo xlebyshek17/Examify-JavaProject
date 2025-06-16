@@ -6,16 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminExamsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminExamsController">
    <children>
-      <TableView fx:id="examTable" layoutY="57.0" prefHeight="343.0" prefWidth="600.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <TableView fx:id="examTable" layoutY="57.0" prefHeight="343.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0">
         <columns>
-          <TableColumn fx:id="examNameColumn" prefWidth="227.0" text="Exam Name" />
-          <TableColumn fx:id="dateColumn" prefWidth="211.0" text="Date" />
-           <TableColumn fx:id="actionsColumn" prefWidth="141.0" text="Actions" />
+          <TableColumn fx:id="examNameColumn" prefWidth="161.0" text="Exam Name" />
+          <TableColumn fx:id="dateColumn" prefWidth="138.0" text="Created at" />
+            <TableColumn fx:id="timeLimitColumn" prefWidth="126.0" text="Time limit" />
+           <TableColumn fx:id="actionsColumn" prefWidth="154.0" text="Actions" />
         </columns>
       </TableView>
-      <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" text="Add Exam" textFill="#610a0a">
+      <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#addExam" text="Add Exam" textFill="#610a0a">
          <font>
             <Font size="18.0" />
          </font>

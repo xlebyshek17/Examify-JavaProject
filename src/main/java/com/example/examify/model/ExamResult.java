@@ -2,21 +2,23 @@ package com.example.examify.model;
 
 import java.time.LocalDateTime;
 
-public class Exam {
+public class ExamResult {
     private int id;
+    private int examId;
     private int studentId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private double score;
 
-    public Exam(int studentId, LocalDateTime startTime, LocalDateTime endTime, double score) {
+    public ExamResult(int studentId, int examId, LocalDateTime startTime, LocalDateTime endTime, double score) {
         this.studentId = studentId;
+        this.examId = examId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.score = score;
     }
 
-    public Exam() {
+    public ExamResult() {
 
     }
 
@@ -35,6 +37,10 @@ public class Exam {
     public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
+
+    public int getExamId() { return examId; }
+
+    public void setExamId(int examId) { this.examId = examId; }
 
     public LocalDateTime getStartTime() {
         return startTime;
