@@ -6,6 +6,7 @@ public class Answer {
     private int questionId;
     private String answer;
     private boolean isCorrect;
+    private Question question;
 
     public Answer(int id, int examId, int questionId, String answer, boolean isCorrect) {
         this.id = id;
@@ -17,6 +18,15 @@ public class Answer {
 
     public Answer(int examId, int questionId, String answer, boolean isCorrect) {
         this(0, examId, questionId, answer, isCorrect);
+    }
+
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
 

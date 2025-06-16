@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.examify.ui.controllers.AnswerReviewController"
+            prefHeight="400.0"
+            prefWidth="600.0">
+
+    <VBox spacing="15" alignment="CENTER"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+
+        <Label text="Odpowiedzi z egzaminu" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <ListView fx:id="answerListView" prefHeight="400" prefWidth="600"/>
+
+        <Button text="Powrót" onAction="#handleBack" prefWidth="150"/>
+    </VBox>
+</AnchorPane>

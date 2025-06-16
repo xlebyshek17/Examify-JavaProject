@@ -5,6 +5,7 @@ import com.example.examify.model.User;
 import com.example.examify.util.DBUtil;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +39,32 @@ public class ExamDAO {
 
         return generatedId;
     }
+
+    public static List<Exam> getExamsByUserId(int userId) {
+        List<Exam> exams = new ArrayList<>();
+        String sql = "SELECT * FROM exams WHERE user_id = ? ORDER BY start_time DESC";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Exam exam = new Exam(
+                        userId,
+                        LocalDateTime.parse(rs.getString("start_time")),
+                        LocalDateTime.parse(rs.getString("end_time")),
+                        rs.getDouble("score")
+                );
+                exam.setId(rs.getInt("id"));
+                exams.add(exam);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exams;
+    }
+
 }

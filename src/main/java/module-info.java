@@ -16,4 +16,6 @@ module com.example.examify {
     // Jeżeli w katalogu com.example.examify masz jakieś @FXML-annotowane klasy:
     opens com.example.examify to javafx.fxml;
     exports com.example.examify;
+
+//    opens com.example.examify.model to javafx.base;
 }
