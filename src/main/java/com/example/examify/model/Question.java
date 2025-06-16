@@ -4,21 +4,24 @@ import java.util.*;
 
 public class Question {
     private int id;
+    private int examId;
     private String text;
-    private String type;
+    private QuestionType type;
     private String options;
     private String correctAnswer;
 
-    public Question(int id, String text, String type, String options, String correctAnswer) {
+    public Question(int id, int examId, String text, QuestionType type, String options, String correctAnswer) {
         this.id = id;
+        this.examId = examId;
         this.text = text;
         this.type = type;
         this.options = options;
         this.correctAnswer = correctAnswer;
     }
+    public Question() {}
 
-    public Question(String text, String type, String options, String correctAnswer) {
-        this(0, text, type, options, correctAnswer);
+    public Question(int examId, String text, QuestionType type, String options, String correctAnswer) {
+        this(0, examId, text, type, options, correctAnswer);
     }
 
     public String getCorrectAnswer() {
@@ -45,11 +48,11 @@ public class Question {
         this.text = text;
     }
 
-    public String getType() {
+    public QuestionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(QuestionType type) {
         this.type = type;
     }
 
@@ -63,6 +66,14 @@ public class Question {
 
     public List<String> getOptionList() {
         return Arrays.asList(options.split(";"));   // ["A","B","C","D"]
+    }
+
+    public int getExamId() {
+        return examId;
+    }
+
+    public void setExamId(int examId) {
+        this.examId = examId;
     }
 
 //    /** Pierwsza odpowiedź traktowana jest jako poprawna */

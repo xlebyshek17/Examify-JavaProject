@@ -1,19 +1,27 @@
 package com.example.examify.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Exam {
     private int id;
-    private int studentId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private double score;
+    private String title;
+    private int questionCount;
+    private int timeLimitMinutes;
+    private Timestamp createdAt;
 
-    public Exam(int studentId, LocalDateTime startTime, LocalDateTime endTime, double score) {
-        this.studentId = studentId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.score = score;
+    public Exam() {}
+
+    public Exam(int id, String title, int questionCount, int timeLimitMinutes, Timestamp createdAt) {
+        this.id = id;
+        this.title = title;
+        this.questionCount = questionCount;
+        this.timeLimitMinutes = timeLimitMinutes;
+        this.createdAt = createdAt;
+    }
+
+    public Exam(String title, int questionCount, int timeLimitMinutes, Timestamp createdAt) {
+        this(0, title, timeLimitMinutes, questionCount, createdAt);
     }
 
     public int getId() {
@@ -24,46 +32,35 @@ public class Exam {
         this.id = id;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public int getQuestionCount() {
+        return questionCount;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setQuestionCount(int questionCount) {
+        this.questionCount = questionCount;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public double getScore() {
-        return score;
+    public int getTime_limit_minutes() {
+        return timeLimitMinutes;
     }
 
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    @Override
-    public String toString() {
-        return "Exam{" +
-                "id=" + id +
-                ", studentId=" + studentId +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", score=" + score +
-                '}';
+    public void setTimeLimitMinutes(int timeLimitMinutes) {
+        this.timeLimitMinutes = timeLimitMinutes;
     }
 }

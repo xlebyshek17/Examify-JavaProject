@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AdminController {
+    public Label adminLabel;
     @FXML
     private StackPane contentPane;
 
@@ -22,20 +24,24 @@ public class AdminController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(newRoot));
         stage.show();
+        stage.centerOnScreen();
     }
 
     @FXML
     public void showExams(ActionEvent actionEvent) {
+        adminLabel.setText("Admin - Exams Management");
         loadView("/com/example/examify/fxml/admin_exams-view.fxml");
     }
 
     @FXML
     public void showResults(ActionEvent actionEvent) {
+        adminLabel.setText("Admin - Results Management");
         loadView("/com/example/examify/fxml/admin_results-view.fxml");
     }
 
     @FXML
     public void showUsers(ActionEvent actionEvent) {
+        adminLabel.setText("Admin - Users Management");
         loadView("/com/example/examify/fxml/admin_users-view.fxml");
     }
 

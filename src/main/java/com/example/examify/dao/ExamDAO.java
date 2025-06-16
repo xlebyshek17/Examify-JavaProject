@@ -1,68 +1,104 @@
 package com.example.examify.dao;
 
 import com.example.examify.model.Exam;
+import com.example.examify.model.User;
+import com.example.examify.util.DBUtil;
 
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ExamDAO {
-    private static final String DB_URL = "jdbc:sqlite:exams.db";
+    public List<Exam> getAllExams() {
+        List<Exam> exams = new ArrayList<>();
+        String query = "SELECT * FROM exams";
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Exam e = new Exam();
+                e.setId(rs.getInt("id"));
+                e.setTitle(rs.getString("title"));
+                e.setQuestionCount(rs.getInt("question_count"));
+                e.setCreatedAt(rs.getTimestamp("created_at"));
+                e.setTimeLimitMinutes(rs.getInt("time_limit_minutes"));
+                exams.add(e);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exams;
+    }
 
-    public static int saveExam(Exam exam) {
-        String sql = "INSERT INTO exams(user_id, start_time, end_time, score) VALUES (?, ?, ?, ?)";
+    public int saveExam(Exam exam) throws SQLException {
+        String query = "INSERT INTO exams(title, question_count, time_limit_minutes) VALUES (?, ?, ?)";
         int generatedId = -1;
+        try (Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, exam.getTitle());
+            ps.setInt(3, exam.getQuestionCount());
+            ps.setInt(4, exam.getTime_limit_minutes());
+            int affectedRows = ps.executeUpdate();
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setInt(1, exam.getStudentId());
-            stmt.setString(2, exam.getStartTime().toString());
-            stmt.setString(3, exam.getEndTime().toString());
-            stmt.setDouble(4, exam.getScore());
-
-            int rows = stmt.executeUpdate();
-
-            if (rows > 0) {
-                ResultSet keys = stmt.getGeneratedKeys();
-                if (keys.next()) {
-                    generatedId = keys.getInt(1);
+            if (affectedRows == 1) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedId = rs.getInt(1);
+                        exam.setId(generatedId);
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return generatedId;
     }
 
-    public static List<Exam> getExamsByUserId(int userId) {
-        List<Exam> exams = new ArrayList<>();
-        String sql = "SELECT * FROM exams WHERE user_id = ? ORDER BY start_time DESC";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Exam exam = new Exam(
-                        userId,
-                        LocalDateTime.parse(rs.getString("start_time")),
-                        LocalDateTime.parse(rs.getString("end_time")),
-                        rs.getDouble("score")
-                );
-                exam.setId(rs.getInt("id"));
-                exams.add(exam);
+    public int updateExam(Exam exam) throws SQLException {
+        String query = "UPDATE exams SET title = ?, question_count = ?, time_limit_minutes = ? WHERE id = ?";
+        int updatedId = -1;
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, exam.getTitle());
+            ps.setInt(2, exam.getQuestionCount());
+            ps.setInt(3, exam.getTime_limit_minutes());
+            int affected = ps.executeUpdate();
+            if (affected == 1) {
+                updatedId =  exam.getId();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return exams;
+        return updatedId;
     }
 
+    public Optional<Exam> findById(int id) throws SQLException {
+        String query = "SELECT * FROM exams WHERE id = ?";
+        try (Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Exam exam = mapRowToExam(rs);
+                    return Optional.of(exam);
+                }
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    private Exam mapRowToExam(ResultSet rs) throws SQLException {
+        return new Exam(rs.getInt("id"),
+                rs.getString("title"),
+                rs.getInt("question_count"),
+                rs.getInt("time_limit_minutes"),
+                rs.getTimestamp("created_at")
+        );
+    }
 }
