@@ -35,32 +35,45 @@ public class DBUtil {
             );
             """);
             s.execute("""
-            CREATE TABLE IF NOT EXISTS questions (
+            CREATE TABLE IF NOT EXISTS exams (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                text TEXT NOT NULL,
-                type TEXT NOT NULL,
-                options TEXT,
-                correct_answer TEXT
+                title TEXT UNIQUE NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                question_count INTEGER NOT NULL,
+                time_limit_minutes INTEGER NOT NULL
             );
             """);
             s.execute("""
-            CREATE TABLE IF NOT EXISTS exams (
+            CREATE TABLE IF NOT EXISTS questions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                exam_id INTEGER NOT NULL,
+                text TEXT NOT NULL,
+                type TEXT NOT NULL,
+                options TEXT,
+                correct_answer TEXT,
+                FOREIGN KEY (exam_id) REFERENCES exams (id)
+            );
+            """);
+            s.execute("""
+            CREATE TABLE IF NOT EXISTS exam_results (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
                user_id INTEGER NOT NULL,
+               exam_id INTEGER NOT NULL,
                start_time DATETIME,
                end_time DATETIME,
                score REAL,
-               FOREIGN KEY (user_id) REFERENCES users (id)
+               FOREIGN KEY (user_id) REFERENCES users (id),
+               FOREIGN KEY (exam_id) REFERENCES exams (id)
             );
            """);
             s.execute("""
             CREATE TABLE IF NOT EXISTS answers (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                exam_id INTEGER NOT NULL,
+                exam_result_id INTEGER NOT NULL,
                 question_id INTEGER NOT NULL,
                 answer TEXT NOT NULL,
                 is_correct BOOLEAN,
-                FOREIGN KEY (exam_id) REFERENCES exams (id),
+                FOREIGN KEY (exam_result_id) REFERENCES exam_results(id),
                 FOREIGN KEY (question_id) REFERENCES questions (id)
             );
         """);
