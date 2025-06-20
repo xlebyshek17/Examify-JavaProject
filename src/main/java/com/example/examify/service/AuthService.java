@@ -34,8 +34,12 @@ public class AuthService {
                     return Optional.of(user);
                 }
             }
-            if (BCrypt.checkpw(inputPassword, user.getPasswordHash())) {
-                return Optional.of(user);
+            try {
+                if (BCrypt.checkpw(inputPassword, user.getPasswordHash())) {
+                    return Optional.of(user);
+                }
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid password hash for user: " + user.getUsername());
             }
         }
 
