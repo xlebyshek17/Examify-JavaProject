@@ -12,7 +12,7 @@ public class AnswerDAO {
     private static final String DB_URL = "jdbc:sqlite:exams.db";
 
     public static void saveAnswer(Answer answer) {
-        String sql = "INSERT INTO answers(exam_id, question_id, answer, is_correct) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO answers(exam_result_id, question_id, answer, is_correct) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -32,7 +32,7 @@ public class AnswerDAO {
     public static List<Answer> getAnswersByExamId(int examId) {
         List<Answer> answers = new ArrayList<>();
         String sql = "SELECT a.*, q.text, q.correct_answer FROM answers a " +
-                "JOIN questions q ON a.question_id = q.id WHERE a.exam_id = ?";
+                "JOIN questions q ON a.question_id = q.id WHERE a.exam_result_id = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
