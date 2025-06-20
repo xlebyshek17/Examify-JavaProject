@@ -11,13 +11,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AddExamController">
    <children>
       <ToolBar layoutX="-1.0" prefHeight="44.0" prefWidth="700.0">
          <items>
             <Pane prefHeight="34.0" prefWidth="284.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Add Exam" textAlignment="CENTER">
+            <Label fx:id="labelExam" alignment="CENTER" contentDisplay="CENTER" text="Add Exam" textAlignment="CENTER">
                <font>
                   <Font name="Gargi" size="18.0" />
                </font>
@@ -50,11 +49,11 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <TableView fx:id="questionTable" layoutX="30.0" layoutY="203.0" prefHeight="230.0" prefWidth="641.0">
+      <TableView fx:id="questionTable" layoutX="30.0" layoutY="203.0" prefHeight="230.0" prefWidth="641.0" stylesheets="@../styles/styles.css">
         <columns>
-          <TableColumn prefWidth="224.0" text="Question Text" />
-          <TableColumn prefWidth="225.0" text="Correct Answer" />
-            <TableColumn prefWidth="191.0" text="Actions" />
+          <TableColumn fx:id="questionTextColumn" prefWidth="224.0" text="Question Text" />
+          <TableColumn fx:id="correctAnswerColumn" prefWidth="225.0" text="Correct Answer" />
+            <TableColumn fx:id="actionsColumn" prefWidth="191.0" text="Actions" />
         </columns>
       </TableView>
       <Button layoutX="30.0" layoutY="447.0" mnemonicParsing="false" onAction="#addQuestion" prefHeight="37.0" prefWidth="122.0" text="Add Question">
@@ -62,10 +61,11 @@
             <Font name="Gargi" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="549.0" layoutY="447.0" mnemonicParsing="false" onAction="#saveExam" prefHeight="37.0" prefWidth="122.0" text="Save">
+      <Button fx:id="saveButton" layoutX="549.0" layoutY="447.0" mnemonicParsing="false" onAction="#saveExam" prefHeight="37.0" prefWidth="122.0" text="Save">
          <font>
             <Font name="Gargi" size="14.0" />
          </font>
       </Button>
+      <Label fx:id="msgError" layoutX="38.0" layoutY="44.0" textFill="#f20000" />
    </children>
 </AnchorPane>

@@ -25,4 +25,12 @@ public class ExamService {
     public Optional<Exam> getExamById(int id) throws SQLException {
         return examDao.findById(id);
     }
+
+    public boolean deleteExam(int id) throws SQLException {
+        return examDao.deleteById(id);
+    }
+
+    public Optional<Exam> findByTitle(String title) throws SQLException {
+        return examDao.findByTitle(title);
+    }
 }
