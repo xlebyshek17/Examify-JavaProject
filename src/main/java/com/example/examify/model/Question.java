@@ -1,6 +1,7 @@
 package com.example.examify.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Question {
     private int id;
@@ -74,6 +75,19 @@ public class Question {
 
     public void setExamId(int examId) {
         this.examId = examId;
+    }
+
+    public List<AnswerOption> getAnswerOptionList() {
+        if (options == null || options.isEmpty()) return new ArrayList<>();
+        return Arrays.stream(options.split(";"))
+                .map(String::trim)
+                .map(AnswerOption::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return getText() + " " + getType() + " " + getOptions() + " " + getCorrectAnswer() + " " + getExamId();
     }
 
 //    /** Pierwsza odpowiedź traktowana jest jako poprawna */
