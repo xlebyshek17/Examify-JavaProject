@@ -75,5 +75,20 @@ public class StudentController {
         }
     }
 
+    @FXML
+    private void handleShowAvailableExams() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/available-exams-view.fxml"));
+            Parent root = loader.load();
+
+            AvailableExamsController controller = loader.getController();
+            controller.setUser(user);
+
+            Stage stage = (Stage) historyButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -66,6 +66,16 @@ public class ExamController {
     private int index = 0;
     private int score = 0;        // liczba poprawnych
 
+
+//    private User user;
+    private Exam exam;
+
+    public void setUserAndExam(User user, Exam exam) {
+        this.user = user;
+        this.exam = exam;
+    }
+
+
     // ===== API wywoływane z StudentController =====
     public void setUser(User user) { this.user = user; }
     public void startExam() {

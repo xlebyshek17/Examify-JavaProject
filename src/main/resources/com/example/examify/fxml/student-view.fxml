@@ -13,7 +13,8 @@
          </font>
       </Label>
       <Button fx:id="historyButton" layoutX="225" layoutY="230" prefHeight="50.0" prefWidth="150.0" text="Historia egzaminów" onAction="#handleShowHistory" />
-      <Button layoutX="225" layoutY="300" prefHeight="50.0" prefWidth="150.0" text="Rozpocznij egzamin" onAction="#startExam"/>
+<!--      <Button layoutX="225" layoutY="300" prefHeight="50.0" prefWidth="150.0" text="Rozpocznij egzamin" onAction="#startExam"/>-->
+      <Button layoutX="225" layoutY="300" prefHeight="50.0" prefWidth="150.0" fx:id="showExamsButton" text="Wyświetl egzaminy" onAction="#handleShowAvailableExams" />
       <Button layoutX="511.0" layoutY="14.0" mnemonicParsing="false" onAction="#onButtonLogOutClick" prefHeight="35.0" prefWidth="75.0" text="Log out" textFill="#6b0808">
          <font>
             <Font name="Gargi" size="14.0" />
