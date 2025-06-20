@@ -31,7 +31,7 @@ public class AnswerReviewController {
         List<Answer> answers = AnswerDAO.getAnswersByExamId(examId);
 
         for (Answer a : answers) {
-            Question q = a.getQuestion(); // musi być wcześniej ustawiony w DAO
+            Question q = a.getQuestion();
             String status = a.isCorrect() ? "✅" : "❌";
 
             String item = String.format("%s\nTwoja odpowiedź: %s  %s\nPoprawna odpowiedź: %s",

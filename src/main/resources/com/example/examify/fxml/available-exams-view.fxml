@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.examify.ui.controllers.AvailableExamsController">
+
+    <VBox spacing="15" alignment="CENTER"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+
+        <Label text="Wybierz egzamin do rozwiązania" style="-fx-font-size: 18px;"/>
+
+        <ListView fx:id="examListView" prefHeight="300" prefWidth="500"/>
+
+        <HBox spacing="10">
+<!--            <Button text="Rozpocznij" onAction="#handleStartSelectedExam" prefWidth="120"/>-->
+            <Button text="Anuluj" onAction="#handleCancel" prefWidth="120"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -31,7 +31,7 @@ public class ExamController {
     private List<Answer> givenAnswers = new ArrayList<>();
 
     // ===== timer =====
-    private int timeRemaining = 30; // sekundy
+    private int timeRemaining; // sekundy
     private Timeline timer;
     @FXML private Label timerLabel;
 
@@ -66,13 +66,36 @@ public class ExamController {
     private int index = 0;
     private int score = 0;        // liczba poprawnych
 
+
+//    private User user;
+    private Exam exam;
+
+    public void setUserAndExam(User user, Exam exam) {
+        this.user = user;
+        this.exam = exam;
+    }
+
+
     // ===== API wywoływane z StudentController =====
     public void setUser(User user) { this.user = user; }
     public void startExam() {
         startTime = LocalDateTime.now();
-        questions = QuestionDAO.getRandomQuestions(5);
+
+        /* czas zgodnie z limitem egzaminu */
+        timeRemaining = exam.getTime_limit_minutes() * 60;
+
+        /* pobierz wszystkie pytania przypisane do egzaminu */
+        questions = QuestionDAO.getQuestionsForExam(exam.getId());
+
+        /* jeżeli baza ma więcej pytań niż zadeklarowano w exam.getQuestionCount() */
+        if (questions.size() > exam.getQuestionCount()) {
+            Collections.shuffle(questions);
+            questions = questions.subList(0, exam.getQuestionCount());
+        }
+
         showQuestion();
         startTimer();
+
     }
 
     // ===== obsługa FXML =====
@@ -120,11 +143,12 @@ public class ExamController {
             if (timer != null) timer.stop();
             LocalDateTime endTime = LocalDateTime.now();
 
-            ExamResult exam = new ExamResult(user.getId(), 0, startTime, endTime, score);
-            int examId = ExamResultDAO.saveExam(exam);
+            ExamResult result = new ExamResult(user.getId(), exam.getId(), startTime, endTime, score);
+
+            int examId = ExamResultDAO.saveExam(result);
 
             for (Answer a : givenAnswers) {
-                a.setExamId(examId);
+                a.setExamResultId(examId);
                 AnswerDAO.saveAnswer(a);
             }
 

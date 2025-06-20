@@ -11,7 +11,7 @@ public class ExamResultDAO {
     private static final String DB_URL = "jdbc:sqlite:exams.db";
 
     public static int saveExam(ExamResult exam) {
-        String sql = "INSERT INTO exams(user_id, exam_id, start_time, end_time, score) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO exam_results(user_id, exam_id, start_time, end_time, score) VALUES (?, ?, ?, ?, ?)";
         int generatedId = -1;
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -19,9 +19,9 @@ public class ExamResultDAO {
 
             stmt.setInt(1, exam.getStudentId());
             stmt.setInt(2, exam.getExamId());
-            stmt.setString(2, exam.getStartTime().toString());
-            stmt.setString(3, exam.getEndTime().toString());
-            stmt.setDouble(4, exam.getScore());
+            stmt.setString(3, exam.getStartTime().toString());
+            stmt.setString(4, exam.getEndTime().toString());
+            stmt.setDouble(5, exam.getScore());
 
             int rows = stmt.executeUpdate();
 
@@ -40,7 +40,7 @@ public class ExamResultDAO {
 
     public static List<ExamResult> getExamsByUserId(int userId) {
         List<ExamResult> exams = new ArrayList<>();
-        String sql = "SELECT * FROM exams WHERE user_id = ? ORDER BY start_time DESC";
+        String sql = "SELECT * FROM exam_results WHERE user_id = ? ORDER BY start_time DESC";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

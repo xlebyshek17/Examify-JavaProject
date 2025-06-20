@@ -2,22 +2,22 @@ package com.example.examify.model;
 
 public class Answer {
     private int id;
-    private int examId;
+    private int examResultId;
     private int questionId;
     private String answer;
     private boolean isCorrect;
     private Question question;
 
-    public Answer(int id, int examId, int questionId, String answer, boolean isCorrect) {
+    public Answer(int id, int examResultId, int questionId, String answer, boolean isCorrect) {
         this.id = id;
-        this.examId = examId;
+        this.examResultId = examResultId;
         this.questionId = questionId;
         this.answer = answer;
         this.isCorrect = isCorrect;
     }
 
-    public Answer(int examId, int questionId, String answer, boolean isCorrect) {
-        this(0, examId, questionId, answer, isCorrect);
+    public Answer(int examResultId, int questionId, String answer, boolean isCorrect) {
+        this(0, examResultId, questionId, answer, isCorrect);
     }
 
 
@@ -38,12 +38,12 @@ public class Answer {
         this.id = id;
     }
 
-    public int getExamId() {
-        return examId;
+    public int getExamResultId() {
+        return examResultId;
     }
 
-    public void setExamId(int examId) {
-        this.examId = examId;
+    public void setExamResultId(int examResultId) {
+        this.examResultId = examResultId;
     }
 
     public int getQuestionId() {

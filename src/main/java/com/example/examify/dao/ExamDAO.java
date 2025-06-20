@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ExamDAO {
-    public List<Exam> getAllExams() {
+    public static List<Exam> getAllExams() {
         List<Exam> exams = new ArrayList<>();
         String query = "SELECT * FROM exams";
         try (Connection con = DBUtil.getConnection();
