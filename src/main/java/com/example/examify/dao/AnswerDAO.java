@@ -31,8 +31,13 @@ public class AnswerDAO {
 
     public static List<Answer> getAnswersByExamId(int examId) {
         List<Answer> answers = new ArrayList<>();
-        String sql = "SELECT a.*, q.text, q.correct_answer FROM answers a " +
-                "JOIN questions q ON a.question_id = q.id WHERE a.exam_result_id = ?";
+        String sql = """
+            SELECT a.*, q.text, q.correct_answer, q.type, q.options
+            FROM answers a
+            JOIN questions q ON a.question_id = q.id
+            WHERE a.exam_result_id = ?
+        """;
+
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -51,10 +56,13 @@ public class AnswerDAO {
 
                 Question q = new Question(
                         rs.getInt("question_id"),
+                        rs.getInt("exam_result_id"),
                         rs.getString("text"),
-                        QuestionType.valueOf(rs.getString("type").toUpperCase()), "",
+                        QuestionType.valueOf(rs.getString("type").toUpperCase()),
+                        rs.getString("options"),
                         rs.getString("correct_answer")
                 );
+
 
                 a.setQuestion(q);
                 answers.add(a);
