@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.examify.service.AuthService;
+import com.example.examify.util.FxErrorHelper;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -42,56 +43,38 @@ public class SignupController {
         String u = usernameField.getText();
         String e = emailField.getText();
         String p = passwordField.getText();
+        boolean valid = true;
 
         // 1) Username
         if (!u.isEmpty()) {
             if (u.length() < 5 || u.length() > 20) {
-                showError("Username must be 5-20 characters");
-                return;
+                FxErrorHelper.showError(errorField, "Username must be 5-20 characters", signUpButton);
+                valid = false;
             }
-        } else {
-            hideError();
-            signUpButton.setDisable(true);
-            return;
         }
 
         // 2) Email
         if (!e.isEmpty()) {
             if (!e.matches("\\S+@\\S+\\.\\S+")) {
-                showError("Incorrect email format");
-                return;
+                FxErrorHelper.showError(errorField,"Incorrect email format", signUpButton);
+                valid = false;
             }
-        } else {
-            hideError();
-            signUpButton.setDisable(true);
-            return;
         }
 
         // 3) Password
         if (!p.isEmpty()) {
             if (p.length() < 6 || p.length() > 20) {
-                showError("Password must be 6-20 characters");
-                return;
+                FxErrorHelper.showError(errorField,"Password must be 6-20 characters", signUpButton);
+                valid = false;
             }
-        } else {
-            hideError();
-            signUpButton.setDisable(true);
-            return;
         }
 
-        hideError();
-        signUpButton.setDisable(false);
-    }
-
-    private void showError(String msg) {
-        errorField.setText(msg);
-        errorField.setVisible(true);
-        signUpButton.setDisable(true);
-    }
-
-    private void hideError() {
-        errorField.setText("");
-        errorField.setVisible(false);
+        if (valid) {
+            FxErrorHelper.hideError(errorField, signUpButton);
+            //signUpButton.setDisable(false);
+        } else {
+            signUpButton.setDisable(true);
+        }
     }
 
     @FXML
