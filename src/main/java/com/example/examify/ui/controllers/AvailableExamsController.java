@@ -3,6 +3,7 @@ package com.example.examify.ui.controllers;
 import com.example.examify.dao.ExamDAO;
 import com.example.examify.model.Exam;
 import com.example.examify.model.User;
+import com.example.examify.service.ExamService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AvailableExamsController {
@@ -19,14 +21,15 @@ public class AvailableExamsController {
 
     private User user;
     private List<Exam> exams;
+    private final ExamService examService = new ExamService();
 
-    public void setUser(User user) {
+    public void setUser(User user) throws SQLException {
         this.user = user;
         loadExams();
     }
 
-    private void loadExams() {
-        exams = ExamDAO.getAllExams();
+    private void loadExams() throws SQLException {
+        exams = examService.getAllExams();
 
         for (Exam exam : exams) {
             String line = String.format("%s — pytań: %d — czas: %d min",
