@@ -17,7 +17,7 @@ public class AnswerDAO {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, answer.getExamId());
+            stmt.setInt(1, answer.getExamResultId());
             stmt.setInt(2, answer.getQuestionId());
             stmt.setString(3, answer.getAnswer());
             stmt.setBoolean(4, answer.isCorrect());
