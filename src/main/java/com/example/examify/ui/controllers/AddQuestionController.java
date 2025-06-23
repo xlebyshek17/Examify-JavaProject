@@ -38,7 +38,7 @@ public class AddQuestionController {
     @FXML private TableColumn<AnswerOption, String> optionColumn;
     @FXML private TableColumn<AnswerOption, Void> correctColumn;
     @FXML private TableView<AnswerOption> optionsTable;
-    @FXML private TextArea optionField;
+    @FXML private TextField optionField;
 
     private final StringBuilder optionBuilder = new StringBuilder();
     private final ObservableList<AnswerOption> optionList = FXCollections.observableArrayList();

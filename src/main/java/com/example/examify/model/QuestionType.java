@@ -1,9 +1,9 @@
 package com.example.examify.model;
 
 public enum QuestionType {
-    SINGLE_CHOICE("Single Choice"),
-    SHORT_ANSWER("Short Answer"),
-    TRUE_FALSE("True / False");
+    SINGLE_CHOICE("SINGLE_CHOICE"),
+    SHORT_ANSWER("SHORT_ANSWER"),
+    TRUE_FALSE("TRUE_FALSE");
 
     private final String label;
 
