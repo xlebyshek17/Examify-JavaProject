@@ -33,12 +33,7 @@
         </Label>
 
         <!-- SINGLE CHOICE -->
-        <VBox fx:id="singleChoiceBox" spacing="10" visible="false" managed="false">
-            <RadioButton fx:id="optionA" toggleGroup="$optionsGroup" wrapText="true"/>
-            <RadioButton fx:id="optionB" toggleGroup="$optionsGroup" wrapText="true"/>
-            <RadioButton fx:id="optionC" toggleGroup="$optionsGroup" wrapText="true"/>
-            <RadioButton fx:id="optionD" toggleGroup="$optionsGroup" wrapText="true"/>
-        </VBox>
+        <VBox fx:id="singleChoiceBox" spacing="10" visible="false" managed="false"/>
 
         <!-- SHORT ANSWER -->
         <VBox fx:id="shortAnswerBox" visible="false" managed="false">

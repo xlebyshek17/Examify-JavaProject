@@ -162,15 +162,19 @@ public class ExamController {
 
         switch (q.getType()) {
             case SINGLE_CHOICE -> {
+                singleChoiceBox.getChildren().clear(); // wyczyść poprzednie opcje
+                optionsGroup.getToggles().clear();     // wyczyść grupę toggle
+
                 List<String> opts = new ArrayList<>(q.getOptionList());
-                while (opts.size() < 4) opts.add(""); // dla bezpieczeństwa
                 Collections.shuffle(opts);
 
-                optionA.setText(opts.get(0));
-                optionB.setText(opts.get(1));
-                optionC.setText(opts.get(2));
-                optionD.setText(opts.get(3));
-                optionsGroup.selectToggle(null);
+                for (String opt : opts) {
+                    RadioButton rb = new RadioButton(opt);
+                    rb.setWrapText(true);
+                    rb.setToggleGroup(optionsGroup);
+                    singleChoiceBox.getChildren().add(rb);
+                }
+
 
                 singleChoiceBox.setVisible(true); singleChoiceBox.setManaged(true);
             }
