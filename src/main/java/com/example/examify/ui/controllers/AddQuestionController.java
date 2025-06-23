@@ -38,7 +38,7 @@ public class AddQuestionController {
     @FXML private TableColumn<AnswerOption, String> optionColumn;
     @FXML private TableColumn<AnswerOption, Void> correctColumn;
     @FXML private TableView<AnswerOption> optionsTable;
-    @FXML private TextField optionField;
+    @FXML private TextArea optionField;
 
     private final StringBuilder optionBuilder = new StringBuilder();
     private final ObservableList<AnswerOption> optionList = FXCollections.observableArrayList();
@@ -142,7 +142,6 @@ public class AddQuestionController {
                     } else if (start != -1) {
                         optionBuilder.delete(start, start + option.getText().length());
                     }
-
                     validateAll();
                 });
             }

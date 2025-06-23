@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AddExamController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AddExamController">
    <children>
-      <ToolBar layoutX="-1.0" prefHeight="44.0" prefWidth="700.0">
+      <ToolBar layoutX="-1.0" prefHeight="44.0" prefWidth="1000.0">
          <items>
-            <Pane prefHeight="34.0" prefWidth="284.0" />
+            <Pane prefHeight="34.0" prefWidth="419.0" />
             <Label fx:id="labelExam" alignment="CENTER" contentDisplay="CENTER" text="Add Exam" textAlignment="CENTER">
                <font>
                   <Font name="Gargi" size="18.0" />
@@ -23,7 +23,7 @@
             </Label>
          </items>
       </ToolBar>
-      <TextField fx:id="examName" layoutX="211.0" layoutY="68.0" prefHeight="33.0" prefWidth="462.0">
+      <TextField fx:id="examName" layoutX="211.0" layoutY="68.0" prefHeight="33.0" prefWidth="459.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -49,23 +49,28 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <TableView fx:id="questionTable" layoutX="30.0" layoutY="203.0" prefHeight="230.0" prefWidth="641.0" stylesheets="@../styles/styles.css">
+      <TableView fx:id="questionTable" layoutX="30.0" layoutY="203.0" prefHeight="521.0" prefWidth="960.0" stylesheets="@../styles/styles.css" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <columns>
-          <TableColumn fx:id="questionTextColumn" prefWidth="224.0" text="Question Text" />
-          <TableColumn fx:id="correctAnswerColumn" prefWidth="225.0" text="Correct Answer" />
-            <TableColumn fx:id="actionsColumn" prefWidth="191.0" text="Actions" />
+          <TableColumn fx:id="questionTextColumn" prefWidth="482.0" text="Question Text" />
+          <TableColumn fx:id="correctAnswerColumn" prefWidth="286.0" text="Correct Answer" />
+            <TableColumn fx:id="actionsColumn" prefWidth="191.0" />
         </columns>
       </TableView>
-      <Button layoutX="30.0" layoutY="447.0" mnemonicParsing="false" onAction="#addQuestion" prefHeight="37.0" prefWidth="122.0" text="Add Question">
+      <Button layoutX="834.0" layoutY="743.0" mnemonicParsing="false" onAction="#addQuestion" prefHeight="46.0" prefWidth="146.0" text="Add Question" AnchorPane.bottomAnchor="20.0">
          <font>
-            <Font name="Gargi" size="14.0" />
+            <Font name="Gargi" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="saveButton" layoutX="549.0" layoutY="447.0" mnemonicParsing="false" onAction="#saveExam" prefHeight="37.0" prefWidth="122.0" text="Save">
+      <Button fx:id="saveButton" layoutX="160.0" layoutY="533.0" mnemonicParsing="false" onAction="#saveExam" prefHeight="37.0" prefWidth="122.0" text="Save" AnchorPane.bottomAnchor="20.0">
          <font>
-            <Font name="Gargi" size="14.0" />
+            <Font name="Gargi" size="18.0" />
          </font>
       </Button>
       <Label fx:id="msgError" layoutX="38.0" layoutY="44.0" textFill="#f20000" />
+      <Button fx:id="cancelButton" layoutX="20.0" layoutY="533.0" mnemonicParsing="false" onAction="#saveExam" prefHeight="37.0" prefWidth="122.0" text="Cancel" AnchorPane.bottomAnchor="20.0">
+         <font>
+            <Font name="Gargi" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
