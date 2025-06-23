@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class ExamController {
 
@@ -26,6 +28,12 @@ public class ExamController {
     @FXML private RadioButton optionA, optionB, optionC, optionD;
     @FXML private ToggleGroup optionsGroup;
     @FXML private Label progressLabel;
+
+    @FXML private VBox singleChoiceBox, shortAnswerBox, trueFalseBox;
+    @FXML private TextField shortAnswerField;
+    @FXML private RadioButton trueOption, falseOption;
+    @FXML private ToggleGroup tfGroup;
+
 
     private LocalDateTime startTime;
     private List<Answer> givenAnswers = new ArrayList<>();
@@ -101,17 +109,37 @@ public class ExamController {
     // ===== obsługa FXML =====
     @FXML
     private void handleNext() {
-        if (optionsGroup.getSelectedToggle() == null) return;      // nic nie zaznaczono
-
-        RadioButton selected = (RadioButton) optionsGroup.getSelectedToggle();
-        String chosen = selected.getText();
         Question q = questions.get(index);
+        String chosen = null;
 
-        if (chosen.equals(q.getCorrectAnswer())) score++;
+        switch (q.getType()) {
+            case SINGLE_CHOICE -> {
+                RadioButton selected = (RadioButton) optionsGroup.getSelectedToggle();
+                if (selected == null) return;
+                chosen = selected.getText();
+            }
 
-        Answer ans = new Answer(0, 0, q.getId(), chosen, chosen.equals(q.getCorrectAnswer()));
+            case SHORT_ANSWER -> {
+                chosen = shortAnswerField.getText().trim();
+                if (chosen.isEmpty()) return;
+            }
+
+            case TRUE_FALSE -> {
+                RadioButton selected = (RadioButton) tfGroup.getSelectedToggle();
+                if (selected == null) return;
+                if (Objects.equals(selected.getText(), "Prawda")) {
+                    chosen = "True";
+                } else {
+                    chosen = "False";
+                }
+            }
+        }
+
+        boolean isCorrect = chosen.equalsIgnoreCase(q.getCorrectAnswer());
+        Answer ans = new Answer(0, 0, q.getId(), chosen, isCorrect);
         givenAnswers.add(ans);
 
+        if (isCorrect) {score++;}
 
         index++;
         if (index < questions.size()) {
@@ -124,19 +152,41 @@ public class ExamController {
     // ===== pomocnicze =====
     private void showQuestion() {
         Question q = questions.get(index);
-        List<String> opts = new ArrayList<>(q.getOptionList());
-        Collections.shuffle(opts); // losowa kolejność odpowiedzi
-
-
-        questionLabel.setText((index + 1) + ". " + q.getText());
-        optionA.setText(opts.get(0));
-        optionB.setText(opts.get(1));
-        optionC.setText(opts.get(2));
-        optionD.setText(opts.get(3));
-        optionsGroup.selectToggle(null);                     // wyczyść wybór
-
         progressLabel.setText("Pytanie " + (index + 1) + " z " + questions.size());
+        questionLabel.setText(q.getText());
+
+        // Ukryj wszystko
+        singleChoiceBox.setVisible(false); singleChoiceBox.setManaged(false);
+        shortAnswerBox.setVisible(false); shortAnswerBox.setManaged(false);
+        trueFalseBox.setVisible(false);   trueFalseBox.setManaged(false);
+
+        switch (q.getType()) {
+            case SINGLE_CHOICE -> {
+                List<String> opts = new ArrayList<>(q.getOptionList());
+                while (opts.size() < 4) opts.add(""); // dla bezpieczeństwa
+                Collections.shuffle(opts);
+
+                optionA.setText(opts.get(0));
+                optionB.setText(opts.get(1));
+                optionC.setText(opts.get(2));
+                optionD.setText(opts.get(3));
+                optionsGroup.selectToggle(null);
+
+                singleChoiceBox.setVisible(true); singleChoiceBox.setManaged(true);
+            }
+
+            case SHORT_ANSWER -> {
+                shortAnswerField.clear();
+                shortAnswerBox.setVisible(true); shortAnswerBox.setManaged(true);
+            }
+
+            case TRUE_FALSE -> {
+                tfGroup.selectToggle(null);
+                trueFalseBox.setVisible(true); trueFalseBox.setManaged(true);
+            }
+        }
     }
+
 
     private void finishExam() {
         try {

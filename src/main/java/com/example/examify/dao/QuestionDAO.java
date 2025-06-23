@@ -26,7 +26,7 @@ public class QuestionDAO {
                         rs.getInt("id"),
                         rs.getInt("exam_id"),
                         rs.getString("text"),
-                        QuestionType.valueOf(rs.getString("type").toUpperCase()),
+                        QuestionType.fromLabel(rs.getString("type")),
                         rs.getString("options"),
                         rs.getString("correct_answer")
                 ));

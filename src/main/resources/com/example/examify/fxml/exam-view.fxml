@@ -11,37 +11,50 @@
             prefHeight="400.0"
             prefWidth="600.0">
 
-    <!-- Główne okno w centrum -->
-    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+    <!-- Grupa logiczna (nie należy do layoutu) -->
+    <fx:define>
+        <ToggleGroup fx:id="optionsGroup"/>
+        <ToggleGroup fx:id="tfGroup"/>
+    </fx:define>
+
+    <VBox alignment="CENTER" spacing="20"
+          AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
         <!-- Timer -->
         <Label fx:id="timerLabel" text="Pozostały czas: - s"
                style="-fx-font-size: 16px; -fx-text-fill: #d9534f;" />
 
-        <!-- Nagłówek -->
+        <!-- Treść pytania -->
         <Label fx:id="questionLabel" wrapText="true">
             <font>
                 <Font name="System Bold" size="20"/>
             </font>
         </Label>
 
-        <!-- Opcje odpowiedzi -->
-        <VBox spacing="10">
-            <fx:define>
-                <ToggleGroup fx:id="optionsGroup"/>
-            </fx:define>
-
+        <!-- SINGLE CHOICE -->
+        <VBox fx:id="singleChoiceBox" spacing="10" visible="false" managed="false">
             <RadioButton fx:id="optionA" toggleGroup="$optionsGroup" wrapText="true"/>
             <RadioButton fx:id="optionB" toggleGroup="$optionsGroup" wrapText="true"/>
             <RadioButton fx:id="optionC" toggleGroup="$optionsGroup" wrapText="true"/>
             <RadioButton fx:id="optionD" toggleGroup="$optionsGroup" wrapText="true"/>
         </VBox>
 
+        <!-- SHORT ANSWER -->
+        <VBox fx:id="shortAnswerBox" visible="false" managed="false">
+            <TextField fx:id="shortAnswerField" promptText="Wpisz odpowiedź"/>
+        </VBox>
+
+        <!-- TRUE / FALSE -->
+        <VBox fx:id="trueFalseBox" spacing="10" visible="false" managed="false">
+            <RadioButton fx:id="trueOption" toggleGroup="$tfGroup" text="Prawda"/>
+            <RadioButton fx:id="falseOption" toggleGroup="$tfGroup" text="Fałsz"/>
+        </VBox>
+
         <!-- Pasek postępu -->
         <Label fx:id="progressLabel"/>
 
-        <!-- Przycisk -->
+        <!-- Przycisk dalej -->
         <Button text="Dalej" onAction="#handleNext" prefWidth="150"/>
     </VBox>
 </AnchorPane>

@@ -58,7 +58,7 @@ public class AnswerDAO {
                         rs.getInt("question_id"),
                         rs.getInt("exam_result_id"),
                         rs.getString("text"),
-                        QuestionType.valueOf(rs.getString("type").toUpperCase()),
+                        QuestionType.fromLabel(rs.getString("type")),
                         rs.getString("options"),
                         rs.getString("correct_answer")
                 );
