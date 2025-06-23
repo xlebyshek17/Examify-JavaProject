@@ -11,7 +11,6 @@
             prefHeight="400.0"
             prefWidth="600.0">
 
-    <!-- Grupa logiczna (nie należy do layoutu) -->
     <fx:define>
         <ToggleGroup fx:id="optionsGroup"/>
         <ToggleGroup fx:id="tfGroup"/>
@@ -21,35 +20,27 @@
           AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
           AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-        <!-- Timer -->
         <Label fx:id="timerLabel" text="Pozostały czas: - s"
-               style="-fx-font-size: 16px; -fx-text-fill: #d9534f;" />
+               style="-fx-font-size: 16px; -fx-text-fill: #d9534f; -fx-font-family: 'Gubbi';"/>
 
-        <!-- Treść pytania -->
-        <Label fx:id="questionLabel" wrapText="true">
-            <font>
-                <Font name="System Bold" size="20"/>
-            </font>
-        </Label>
+        <Label fx:id="questionLabel" wrapText="true"
+               style="-fx-font-family: 'Gubbi'; -fx-font-weight: bold; -fx-font-size: 20px;"/>
 
-        <!-- SINGLE CHOICE -->
         <VBox fx:id="singleChoiceBox" spacing="10" visible="false" managed="false"/>
 
-        <!-- SHORT ANSWER -->
         <VBox fx:id="shortAnswerBox" visible="false" managed="false">
-            <TextField fx:id="shortAnswerField" promptText="Wpisz odpowiedź"/>
+            <TextField fx:id="shortAnswerField" promptText="Wpisz odpowiedź"
+                       style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px;"/>
         </VBox>
 
-        <!-- TRUE / FALSE -->
         <VBox fx:id="trueFalseBox" spacing="10" visible="false" managed="false">
-            <RadioButton fx:id="trueOption" toggleGroup="$tfGroup" text="Prawda"/>
-            <RadioButton fx:id="falseOption" toggleGroup="$tfGroup" text="Fałsz"/>
+            <RadioButton fx:id="trueOption" toggleGroup="$tfGroup" text="Prawda" style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px;"/>
+            <RadioButton fx:id="falseOption" toggleGroup="$tfGroup" text="Fałsz" style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px;"/>
         </VBox>
 
-        <!-- Pasek postępu -->
-        <Label fx:id="progressLabel"/>
+        <Label fx:id="progressLabel" style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px;" />
 
-        <!-- Przycisk dalej -->
-        <Button text="Dalej" onAction="#handleNext" prefWidth="150"/>
+        <Button text="Dalej" onAction="#handleNext" prefWidth="150"
+                style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px; -fx-text-fill: #6b0808;"/>
     </VBox>
 </AnchorPane>

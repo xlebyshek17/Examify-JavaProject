@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.example.examify.dao.ExamResultDAO.getExamTitle;
+
 public class HistoryController {
 
     @FXML
@@ -49,7 +51,8 @@ public class HistoryController {
         List<ExamResult> exams = ExamResultDAO.getExamsByUserId(user.getId());
 
         for (ExamResult exam : exams) {
-            String line = String.format("[%s] %s–%s   Wynik: %.0f",
+            String line = String.format("%s - [%s] %s–%s   Wynik: %.0f",
+                    getExamTitle(exam.getExamId()),
                     exam.getStartTime().toLocalDate(),
                     DATE_TIME_FMT.format(exam.getStartTime()),
                     DATE_TIME_FMT.format(exam.getEndTime()),
