@@ -66,4 +66,20 @@ public class ExamResultDAO {
         return exams;
     }
 
+    public static String getExamTitle(int examId) {
+        String sql = "SELECT * FROM exams WHERE id = ?";
+        String title = null;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, examId);
+            ResultSet rs = stmt.executeQuery();
+
+            title = rs.getString("title");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return title;
+    }
 }

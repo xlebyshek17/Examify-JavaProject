@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.examify.ui.controllers.AvailableExamsController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.examify.ui.controllers.AvailableExamsController"
+            prefHeight="400.0" prefWidth="600.0">
 
     <VBox spacing="15" alignment="CENTER"
           AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
           AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
 
-        <Label text="Wybierz egzamin do rozwiązania" style="-fx-font-size: 18px;"/>
+        <Label text="Wybierz egzamin do rozwiązania"
+               style="-fx-font-size: 18px; -fx-font-family: 'Gubbi';"
+               textFill="#650707" />
 
-        <ListView fx:id="examListView" prefHeight="300" prefWidth="500"/>
+        <ListView fx:id="examListView" prefHeight="300.0" prefWidth="540.0" />
 
-        <HBox spacing="10">
-<!--            <Button text="Rozpocznij" onAction="#handleStartSelectedExam" prefWidth="120"/>-->
-            <Button text="Anuluj" onAction="#handleCancel" prefWidth="120"/>
+        <HBox spacing="10" alignment="CENTER">
+            <!-- Możesz odkomentować, jeśli chcesz dodać start exam button -->
+            <!-- <Button text="Rozpocznij" onAction="#handleStartSelectedExam" prefWidth="120" style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px; -fx-text-fill: #6b0808;"/> -->
+            <Button text="Anuluj" onAction="#handleCancel" prefWidth="120"
+                    style="-fx-font-family: 'Gubbi'; -fx-font-size: 14px; -fx-text-fill: #6b0808;"/>
         </HBox>
     </VBox>
 </AnchorPane>
