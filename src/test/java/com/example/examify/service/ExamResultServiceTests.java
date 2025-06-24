@@ -28,9 +28,11 @@ public class ExamResultServiceTests {
 
         try (var conn = DBUtil.getConnection();
              var stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM users");
+            stmt.execute("DELETE FROM exams");
+            stmt.execute("DELETE FROM questions");
             stmt.execute("DELETE FROM exam_results");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            stmt.execute("DELETE FROM answers");
         }
 
         examResultService = new ExamResultService();

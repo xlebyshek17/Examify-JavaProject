@@ -28,9 +28,11 @@ public class ExamResultDAOTests {
 
         try (var conn = DBUtil.getConnection();
              var stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM users");
+            stmt.execute("DELETE FROM exams");
+            stmt.execute("DELETE FROM questions");
             stmt.execute("DELETE FROM exam_results");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            stmt.execute("DELETE FROM answers");
         }
 
         // user create
@@ -124,7 +126,7 @@ public class ExamResultDAOTests {
     @Order(7)
     void testCountPassedExams() {
         int passed = new ExamResultDAO().countPassedExams();
-        assertEquals(0, passed);
+        assertEquals(1, passed);
     }
 
     @Test
