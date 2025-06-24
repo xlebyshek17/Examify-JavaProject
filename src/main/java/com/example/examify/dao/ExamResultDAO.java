@@ -1,11 +1,14 @@
 package com.example.examify.dao;
 
 import com.example.examify.model.ExamResult;
+import com.example.examify.model.ExamStats;
+import com.example.examify.util.DBUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ExamResultDAO {
     private static final String DB_URL = "jdbc:sqlite:exams.db";
@@ -17,7 +20,7 @@ public class ExamResultDAO {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setInt(1, exam.getStudentId());
+            stmt.setInt(1, exam.getUserId());
             stmt.setInt(2, exam.getExamId());
             stmt.setString(3, exam.getStartTime().toString());
             stmt.setString(4, exam.getEndTime().toString());
@@ -82,4 +85,140 @@ public class ExamResultDAO {
         }
         return title;
     }
+
+    public Optional<ExamStats> getStatsByExamId(int examId) {
+        String sql = """
+        WITH question_count AS (
+            SELECT exam_id, COUNT(*) AS total_questions
+            FROM questions
+            GROUP BY exam_id
+        )
+        SELECT
+            AVG(er.score) AS average_score,
+            MAX(er.score) AS max_score,
+            MIN(er.score) AS min_score,
+            COUNT(*) AS total_attempts,
+            SUM(CASE
+                    WHEN er.score > qc.total_questions / 2 THEN 1
+                    ELSE 0
+                END) * 100.0 / COUNT(*) AS pass_percentage,
+            AVG(strftime('%s', er.end_time) - strftime('%s', er.start_time)) / 60.0 AS avg_duration_minutes
+        FROM exam_results er
+        JOIN question_count qc ON er.exam_id = qc.exam_id
+        WHERE er.exam_id = ?;
+        """;
+
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, examId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int totalAttempts = rs.getInt("total_attempts");
+                double avg = rs.getDouble("average_score");
+                double max = rs.getDouble("max_score");
+                double min = rs.getDouble("min_score");
+                double pass = rs.getDouble("pass_percentage");
+                double avgTime = rs.getDouble("avg_duration_minutes");
+
+                ExamStats stats = new ExamStats(totalAttempts, avg, max, min, pass, avgTime);
+                return Optional.of(stats);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    public List<ExamResult> getResultsForExam(int examId) {
+        List<ExamResult> results = new ArrayList<>();
+        String sql = "SELECT * FROM exam_results WHERE exam_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, examId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int userId = rs.getInt("user_id");
+                LocalDateTime start = LocalDateTime.parse(rs.getString("start_time"));
+                LocalDateTime end = LocalDateTime.parse(rs.getString("end_time"));
+                double score = rs.getDouble("score");
+
+                results.add(new ExamResult(id, userId, examId, start, end, score));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public double getAverageScore() {
+        String sql = "SELECT AVG(score) FROM exam_results";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getDouble(1) : 0.0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
+    }
+
+    public int countPassedExams() {
+        String sql = """
+        SELECT COUNT(*) FROM exam_results er
+        JOIN exams e ON er.exam_id = e.id
+        WHERE er.score >= (
+            SELECT COUNT(*) / 2.0
+            FROM questions q
+            WHERE q.exam_id = er.exam_id
+        )
+    """;
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countAllAttempts() {
+        String sql = "SELECT COUNT(*) FROM exam_results";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public double getAverageDurationInMinutes() {
+        String sql = """
+        SELECT AVG((julianday(end_time) - julianday(start_time)) * 24 * 60)
+        FROM exam_results
+        WHERE start_time IS NOT NULL AND end_time IS NOT NULL
+    """;
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getDouble(1) : 0.0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
+    }
+
+
 }

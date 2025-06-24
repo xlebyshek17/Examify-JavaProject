@@ -34,4 +34,8 @@ public class QuestionService {
     public List<Question> getQuestionsByExamId(int examId) throws SQLException {
         return questionDAO.getQuestionsByExamId(examId);
     }
+
+    public int getQuestionCountForExam(int examId) throws SQLException {
+        return questionDAO.getQuestionCountForExam(examId);
+    }
 }

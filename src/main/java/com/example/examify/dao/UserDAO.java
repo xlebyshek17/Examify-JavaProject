@@ -113,4 +113,16 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
+
+    public int countAllStudents() {
+        String sql = "SELECT COUNT(*) FROM users WHERE is_admin = 0";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

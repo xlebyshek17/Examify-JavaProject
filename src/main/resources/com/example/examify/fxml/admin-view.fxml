@@ -7,19 +7,22 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="910.0" prefWidth="1225.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminController">
    <children>
-      <BorderPane layoutY="-1.0" prefHeight="910.0" prefWidth="1225.0">
+      <BorderPane fx:id="adminMainPane" layoutY="-1.0" prefHeight="910.0" prefWidth="1225.0">
          <top>
             <ToolBar prefHeight="41.0" prefWidth="1225.0" BorderPane.alignment="CENTER">
                <items>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="106.0" text="Menu" textAlignment="CENTER" textFill="#650707">
+                  <Label fx:id="menuLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#handleMenuClick" prefHeight="46.0" prefWidth="106.0" text="Menu" textAlignment="CENTER" textFill="#650707">
                      <font>
                         <Font name="Gargi" size="24.0" />
                      </font>
@@ -82,7 +85,186 @@
             </VBox>
          </left>
          <center>
-            <StackPane fx:id="contentPane" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="contentPane" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="1094.0" text="Welcome to the Admin Panel">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets left="320.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="117.0" prefWidth="819.0" text="Here you can manage exams, users and view results. Use the menu on the left" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="150.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <GridPane prefHeight="449.0" prefWidth="1104.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="357.0" minWidth="10.0" prefWidth="346.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.0" minWidth="10.0" prefWidth="361.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="397.0" minWidth="10.0" prefWidth="397.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="316.0" minHeight="10.0" prefHeight="234.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="437.0" minHeight="10.0" prefHeight="215.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin>
+                           <children>
+                              <VBox prefHeight="328.0" prefWidth="301.0">
+                                 <children>
+                                    <Label text="Exams total:" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="100.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="totalExamLabel" prefHeight="55.0" prefWidth="373.0" text="Label" textFill="#8d0909">
+                                       <font>
+                                          <Font size="45.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="140.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="328.0" prefWidth="301.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label text="Students total:" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="100.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="studentsTotalLabel" prefHeight="55.0" prefWidth="373.0" text="Label" textFill="#8d0909">
+                                       <font>
+                                          <Font size="45.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="140.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="328.0" prefWidth="301.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <Label text="Average score:" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="100.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="averageScoreLabel" prefHeight="55.0" prefWidth="373.0" text="Label" textFill="#8d0909">
+                                       <font>
+                                          <Font size="45.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="140.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="328.0" prefWidth="301.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Exam passed:" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="100.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="examPassedLabel" prefHeight="55.0" prefWidth="373.0" text="Label" textFill="#8d0909">
+                                       <font>
+                                          <Font size="45.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="140.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="328.0" prefWidth="301.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Attemps total:" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="100.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="attempsTotalLabel" prefHeight="55.0" prefWidth="373.0" text="Label" textFill="#8d0909">
+                                       <font>
+                                          <Font size="45.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="140.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="328.0" prefWidth="301.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label text="Average duration:" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="100.0" top="50.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="averageDurationLabel" prefHeight="55.0" prefWidth="373.0" text="Label" textFill="#8d0909">
+                                       <font>
+                                          <Font size="45.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="140.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children></StackPane>
          </center>
       </BorderPane>
    </children>

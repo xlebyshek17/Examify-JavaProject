@@ -63,4 +63,9 @@ public class Exam {
     public void setTimeLimitMinutes(int timeLimitMinutes) {
         this.timeLimitMinutes = timeLimitMinutes;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

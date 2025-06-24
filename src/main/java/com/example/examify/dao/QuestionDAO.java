@@ -180,5 +180,20 @@ public class QuestionDAO {
         }
         return questions;
     }
+
+    public int getQuestionCountForExam(int examId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM questions WHERE exam_id = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, examId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
 }
 

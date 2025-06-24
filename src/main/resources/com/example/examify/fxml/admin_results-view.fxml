@@ -1,11 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminResultsController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.examify.ui.controllers.AdminResultsController">
    <children>
-      <Label layoutX="218.0" layoutY="162.0" text="admin results page" />
+      <ComboBox fx:id="examComboBox" layoutX="14.0" layoutY="14.0" prefHeight="24.0" prefWidth="228.0" promptText="Select Exam" />
+      <VBox alignment="CENTER" prefHeight="55.0" prefWidth="349.0" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="35.0">
+         <children>
+            <Separator prefHeight="0.0" prefWidth="200.0" />
+            <Label prefHeight="44.0" prefWidth="293.0" text="Exam Statistics">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+         </children>
+      </VBox>
+      <GridPane fx:id="statsGrid" layoutX="82.0" layoutY="158.0" prefHeight="288.0" prefWidth="408.0" AnchorPane.leftAnchor="50.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="263.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="145.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="79.0" minHeight="0.0" prefHeight="48.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Number of attemps:">
+               <font>
+                  <Font name="C059-Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Average score:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Max score:" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Min score:" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label text="Pass percentage:" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="56.0" prefWidth="200.0" text="Average duration: " GridPane.rowIndex="5">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="attemps" textFill="#cd0f0f" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="avScore" textFill="#cd0f0f" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="maxScore" textFill="#cd0f0f" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="minScore" textFill="#cd0f0f" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="passPercentage" textFill="#cd0f0f" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="averageDuration" textFill="#cd0f0f" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Gargi" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <VBox  layoutX="517.0" layoutY="135.0" prefHeight="341.0" prefWidth="408.0" AnchorPane.rightAnchor="50.0">
+         <children>
+            <BarChart fx:id="barChart" prefHeight="425.0" prefWidth="528.0">
+              <xAxis>
+                <CategoryAxis label="GRADE" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="NUMBER OF STUDENTS" side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children>
+      </VBox>
+      <TableView fx:id="resultsTable" stylesheets="@../styles/styles.css" layoutX="50.0" layoutY="499.0" prefHeight="288.0" prefWidth="900.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+        <columns>
+          <TableColumn fx:id="studentColumn" prefWidth="311.0" text="Student" />
+          <TableColumn fx:id="scoreColumn" prefWidth="160.0" text="Score" />
+            <TableColumn fx:id="startColumn" prefWidth="143.0" text="Start at" />
+            <TableColumn fx:id="endColumn" prefWidth="137.0" text="End at" />
+            <TableColumn fx:id="durationColumn" prefWidth="146.0" text="Duration" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

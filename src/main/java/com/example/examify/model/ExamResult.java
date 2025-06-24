@@ -5,17 +5,22 @@ import java.time.LocalDateTime;
 public class ExamResult {
     private int id;
     private int examId;
-    private int studentId;
+    private int userId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private double score;
 
-    public ExamResult(int studentId, int examId, LocalDateTime startTime, LocalDateTime endTime, double score) {
-        this.studentId = studentId;
+    public ExamResult(int id, int studentId, int examId, LocalDateTime startTime, LocalDateTime endTime, double score) {
+        this.id = id;
+        this.userId = studentId;
         this.examId = examId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.score = score;
+    }
+
+    public ExamResult(int studentId, int examId, LocalDateTime startTime, LocalDateTime endTime, double score) {
+        this(0, studentId, examId, startTime, endTime, score);
     }
 
     public ExamResult() {
@@ -30,12 +35,12 @@ public class ExamResult {
         this.id = id;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setUsertId(int studentId) {
+        this.userId = studentId;
     }
 
     public int getExamId() { return examId; }
@@ -70,7 +75,7 @@ public class ExamResult {
     public String toString() {
         return "Exam{" +
                 "id=" + id +
-                ", studentId=" + studentId +
+                ", studentId=" + userId +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", score=" + score +
