@@ -12,6 +12,7 @@ import java.io.IOException;
 public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        System.setProperty("db.mode", "prod");
         DBUtil.init();
         // Ładujemy plik FXML z widokiem logowania
         FXMLLoader loader = new FXMLLoader(

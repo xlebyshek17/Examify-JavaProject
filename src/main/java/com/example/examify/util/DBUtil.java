@@ -20,7 +20,7 @@ public class DBUtil {
         if (mode.equals("test")) {
             URL = "jdbc:sqlite::memory:";
         } else {
-            URL = "jdbc:sqlite:exams.db";
+            URL = "exams.db";
         }
     }
 
