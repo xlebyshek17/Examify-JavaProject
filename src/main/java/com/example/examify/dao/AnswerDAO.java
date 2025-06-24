@@ -3,6 +3,7 @@ package com.example.examify.dao;
 import com.example.examify.model.Answer;
 import com.example.examify.model.Question;
 import com.example.examify.model.QuestionType;
+import com.example.examify.util.DBUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class AnswerDAO {
     public static void saveAnswer(Answer answer) {
         String sql = "INSERT INTO answers(exam_result_id, question_id, answer, is_correct) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, answer.getExamResultId());
@@ -39,7 +40,7 @@ public class AnswerDAO {
         """;
 
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, examId);

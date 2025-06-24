@@ -15,7 +15,7 @@ public class QuestionDAO {
         List<Question> list = new ArrayList<>();
         String sql = "SELECT * FROM questions WHERE exam_id = ?";
 
-        try (Connection c = DriverManager.getConnection(DB_URL);
+        try (Connection c = DBUtil.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
             ps.setInt(1, examId);

@@ -6,21 +6,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBUtil {
-    private static final String URL = "jdbc:sqlite:exams.db";
+    private static final String URL;
 
     static {
         try {
             Class.forName("org.sqlite.JDBC");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new ExceptionInInitializerError("Brak sterownika SQLite: " + e.getMessage());
+        }
+
+        String mode = System.getProperty("db.mode", "prod");
+
+        if (mode.equals("test")) {
+            URL = "jdbc:sqlite::memory:";
+        } else {
+            URL = "jdbc:sqlite:exams.db";
         }
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL);
+        return DriverManager.getConnection("jdbc:sqlite:" + URL);
     }
-
     public static void init() {
         try (Connection c = getConnection();
              Statement s = c.createStatement()

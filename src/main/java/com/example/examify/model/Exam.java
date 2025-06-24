@@ -24,6 +24,12 @@ public class Exam {
         this(0, title, timeLimitMinutes, questionCount, createdAt);
     }
 
+    public Exam(String title, int questionCount, int timeLimitMinutes) {
+        this.title = title;
+        this.questionCount = questionCount;
+        this.timeLimitMinutes = timeLimitMinutes;
+    }
+
     public int getId() {
         return id;
     }

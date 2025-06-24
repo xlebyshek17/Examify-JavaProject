@@ -17,7 +17,7 @@ public class ExamResultDAO {
         String sql = "INSERT INTO exam_results(user_id, exam_id, start_time, end_time, score) VALUES (?, ?, ?, ?, ?)";
         int generatedId = -1;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, exam.getUserId());
@@ -45,7 +45,7 @@ public class ExamResultDAO {
         List<ExamResult> exams = new ArrayList<>();
         String sql = "SELECT * FROM exam_results WHERE user_id = ? ORDER BY start_time DESC";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, userId);
@@ -73,13 +73,16 @@ public class ExamResultDAO {
         String sql = "SELECT * FROM exams WHERE id = ?";
         String title = null;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, examId);
             ResultSet rs = stmt.executeQuery();
 
-            title = rs.getString("title");
+            if (rs.next()) {
+                title = rs.getString("title");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -137,7 +140,7 @@ public class ExamResultDAO {
         List<ExamResult> results = new ArrayList<>();
         String sql = "SELECT * FROM exam_results WHERE exam_id = ?";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, examId);
