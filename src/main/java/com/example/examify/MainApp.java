@@ -24,7 +24,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws IOException {
         System.setProperty("db.mode", "prod");
         DBUtil.init();
-        // Ładujemy plik FXML z widokiem logowania
+
         FXMLLoader loader = new FXMLLoader(
                 MainApp.class.getResource("/com/example/examify/fxml/welcome-view.fxml")
         );
