@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Klasa pomocnicza do obsługi bazy danych SQLite.
+ * Odpowiada za połączenia i inicjalizację schematu bazy.
+ */
 public class DBUtil {
     private static final String URL;
 
@@ -24,9 +28,19 @@ public class DBUtil {
         }
     }
 
+    /**
+     * Zwraca połączenie do bazy danych na podstawie ustawionego trybu.
+     *
+     * @return aktywne połączenie z bazą danych
+     * @throws SQLException w przypadku problemu z połączeniem
+     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:" + URL);
     }
+
+    /**
+     * Inicjalizuje bazę danych SQLite, tworząc tabele jeśli nie istnieją.
+     */
     public static void init() {
         try (Connection c = getConnection();
              Statement s = c.createStatement()
