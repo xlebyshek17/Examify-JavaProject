@@ -9,7 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Główna klasa aplikacji Examify uruchamiana jako aplikacja JavaFX.
+ * Inicjalizuje połączenie z bazą danych i wyświetla ekran powitalny.
+ */
 public class MainApp extends Application {
+    /**
+     * Punkt wejścia JavaFX. Ładuje widok logowania i uruchamia aplikację.
+     *
+     * @param stage główna scena aplikacji
+     * @throws IOException jeśli nie uda się załadować pliku FXML
+     */
     @Override
     public void start(Stage stage) throws IOException {
         System.setProperty("db.mode", "prod");
@@ -25,6 +35,11 @@ public class MainApp extends Application {
         stage.show();
     }
 
+    /**
+     * Metoda główna uruchamiająca aplikację.
+     *
+     * @param args argumenty wiersza poleceń
+     */
     public static void main(String[] args) {
         launch();
     }
