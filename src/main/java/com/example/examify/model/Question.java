@@ -3,6 +3,9 @@ package com.example.examify.model;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Reprezentuje pytanie egzaminacyjne.
+ */
 public class Question {
     private int id;
     private int examId;
@@ -19,64 +22,41 @@ public class Question {
         this.options = options;
         this.correctAnswer = correctAnswer;
     }
+
     public Question() {}
 
     public Question(int examId, String text, QuestionType type, String options, String correctAnswer) {
         this(0, examId, text, type, options, correctAnswer);
     }
 
-    public String getCorrectAnswer() {
-        return correctAnswer;
-    }
+    public String getCorrectAnswer() { return correctAnswer; }
+    public void setCorrectAnswer(String correctAnswer) { this.correctAnswer = correctAnswer; }
 
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getId() {
-        return id;
-    }
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public QuestionType getType() { return type; }
+    public void setType(QuestionType type) { this.type = type; }
 
-    public String getText() {
-        return text;
-    }
+    public String getOptions() { return options; }
+    public void setOptions(String options) { this.options = options; }
 
-    public void setText(String text) {
-        this.text = text;
-    }
+    public int getExamId() { return examId; }
+    public void setExamId(int examId) { this.examId = examId; }
 
-    public QuestionType getType() {
-        return type;
-    }
-
-    public void setType(QuestionType type) {
-        this.type = type;
-    }
-
-    public String getOptions() {
-        return options;
-    }
-
-    public void setOptions(String options) {
-        this.options = options;
-    }
-
+    /**
+     * Zwraca listę opcji jako Stringi.
+     */
     public List<String> getOptionList() {
-        return Arrays.asList(options.split(";"));   // ["A","B","C","D"]
+        return Arrays.asList(options.split(";"));
     }
 
-    public int getExamId() {
-        return examId;
-    }
-
-    public void setExamId(int examId) {
-        this.examId = examId;
-    }
-
+    /**
+     * Zwraca listę opcji w formie obiektów AnswerOption.
+     */
     public List<AnswerOption> getAnswerOptionList() {
         if (options == null || options.isEmpty()) return new ArrayList<>();
         return Arrays.stream(options.split(";"))
@@ -89,9 +69,4 @@ public class Question {
     public String toString() {
         return getText() + " " + getType() + " " + getOptions() + " " + getCorrectAnswer() + " " + getExamId();
     }
-
-//    /** Pierwsza odpowiedź traktowana jest jako poprawna */
-//    public String getCorrectOption() {
-//        return getOptionList().get(0);
-//    }
 }

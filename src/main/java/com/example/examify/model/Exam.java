@@ -3,6 +3,9 @@ package com.example.examify.model;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Reprezentuje egzamin, który użytkownik może rozwiązać.
+ */
 public class Exam {
     private int id;
     private String title;
@@ -21,7 +24,7 @@ public class Exam {
     }
 
     public Exam(String title, int questionCount, int timeLimitMinutes, Timestamp createdAt) {
-        this(0, title, timeLimitMinutes, questionCount, createdAt);
+        this(0, title, questionCount, timeLimitMinutes, createdAt);
     }
 
     public Exam(String title, int questionCount, int timeLimitMinutes) {
@@ -30,48 +33,21 @@ public class Exam {
         this.timeLimitMinutes = timeLimitMinutes;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getTitle() {
-        return title;
-    }
+    public int getQuestionCount() { return questionCount; }
+    public void setQuestionCount(int questionCount) { this.questionCount = questionCount; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public Timestamp getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
 
-    public int getQuestionCount() {
-        return questionCount;
-    }
-
-    public void setQuestionCount(int questionCount) {
-        this.questionCount = questionCount;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public int getTime_limit_minutes() {
-        return timeLimitMinutes;
-    }
-
-    public void setTimeLimitMinutes(int timeLimitMinutes) {
-        this.timeLimitMinutes = timeLimitMinutes;
-    }
+    public int getTime_limit_minutes() { return timeLimitMinutes; }
+    public void setTimeLimitMinutes(int timeLimitMinutes) { this.timeLimitMinutes = timeLimitMinutes; }
 
     @Override
-    public String toString() {
-        return title;
-    }
+    public String toString() { return title; }
 }

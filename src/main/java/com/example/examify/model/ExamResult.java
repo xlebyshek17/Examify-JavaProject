@@ -2,6 +2,9 @@ package com.example.examify.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Reprezentuje wynik konkretnego egzaminu rozwiązany przez użytkownika.
+ */
 public class ExamResult {
     private int id;
     private int examId;
@@ -23,53 +26,25 @@ public class ExamResult {
         this(0, studentId, examId, startTime, endTime, score);
     }
 
-    public ExamResult() {
+    public ExamResult() {}
 
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUsertId(int studentId) {
-        this.userId = studentId;
-    }
+    public int getUserId() { return userId; }
+    public void setUsertId(int studentId) { this.userId = studentId; }
 
     public int getExamId() { return examId; }
-
     public void setExamId(int examId) { this.examId = examId; }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
+    public LocalDateTime getStartTime() { return startTime; }
+    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
+    public LocalDateTime getEndTime() { return endTime; }
+    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
+    public double getScore() { return score; }
+    public void setScore(double score) { this.score = score; }
 
     @Override
     public String toString() {

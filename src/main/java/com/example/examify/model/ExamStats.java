@@ -1,5 +1,8 @@
 package com.example.examify.model;
 
+/**
+ * Reprezentuje zagregowane statystyki dotyczące egzaminu.
+ */
 public class ExamStats {
     private int totalAttempts;
     private double averageScore;
@@ -18,29 +21,12 @@ public class ExamStats {
         this.averageDurationMinutes = averageDurationMinutes;
     }
 
-    public int getTotalAttempts() {
-        return totalAttempts;
-    }
-
-    public double getAverageScore() {
-        return averageScore;
-    }
-
-    public double getMaxScore() {
-        return maxScore;
-    }
-
-    public double getMinScore() {
-        return minScore;
-    }
-
-    public double getPassPercentage() {
-        return passPercentage;
-    }
-
-    public double getAverageDurationMinutes() {
-        return averageDurationMinutes;
-    }
+    public int getTotalAttempts() { return totalAttempts; }
+    public double getAverageScore() { return averageScore; }
+    public double getMaxScore() { return maxScore; }
+    public double getMinScore() { return minScore; }
+    public double getPassPercentage() { return passPercentage; }
+    public double getAverageDurationMinutes() { return averageDurationMinutes; }
 
     @Override
     public String toString() {
@@ -50,4 +36,3 @@ public class ExamStats {
         );
     }
 }
-
