@@ -20,6 +20,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Kontroler do obsługi formularza dodawania i edycji pytania.
+ */
 public class AddQuestionController {
 
     @FXML private Button cancelButton;
@@ -54,6 +57,9 @@ public class AddQuestionController {
 
     private Question q;
 
+    /**
+     * Inicjalizuje komponenty formularza i nasłuchuje zmian w polach.
+     */
     @FXML
     private void initialize() {
         saveButton.setDisable(true);
@@ -74,6 +80,9 @@ public class AddQuestionController {
         setOptionsTable();
     }
 
+    /**
+     * Ustawia wartości i wygląd pola typu pytania.
+     */
     private void setTypeComboBox() {
         questionTypeComboBox.setItems(FXCollections.observableArrayList(QuestionType.values()));
 
@@ -98,6 +107,9 @@ public class AddQuestionController {
         });
     }
 
+    /**
+     * Konfiguruje tabelę odpowiedzi dla pytań jednokrotnego wyboru.
+     */
     private void setOptionsTable() {
         optionColumn.setCellValueFactory(data -> data.getValue().textProperty());
         optionsTable.setItems(optionList);
@@ -158,6 +170,10 @@ public class AddQuestionController {
         });
     }
 
+    /**
+     * Waliduje dane wprowadzone w formularzu pytania.
+     * Weryfikuje m.in. treść pytania, typ oraz poprawność odpowiedzi.
+     */
     public void validateAll() {
         String q = questionText.getText();
         QuestionType type = questionTypeComboBox.getValue();
@@ -211,6 +227,11 @@ public class AddQuestionController {
         }
     }
 
+    /**
+     * Dostosowuje widoczność pól w formularzu zależnie od wybranego typu pytania.
+     *
+     * @param type wybrany typ pytania
+     */
     private void updateUIByQuestionType(QuestionType type) {
         optionsBox.setVisible(false);
         optionsBox.setManaged(false);
@@ -231,6 +252,11 @@ public class AddQuestionController {
         }
     }
 
+    /**
+     * Obsługuje dodanie nowej opcji odpowiedzi w pytaniu jednokrotnego wyboru.
+     *
+     * @param actionEvent zdarzenie kliknięcia przycisku
+     */
     @FXML
     public void hadleAddOption(ActionEvent actionEvent) {
         String text = optionField.getText();
@@ -249,6 +275,13 @@ public class AddQuestionController {
         }
     }
 
+    /**
+     * Zapisuje pytanie na podstawie danych z formularza.
+     * Zamyka okno po zapisaniu.
+     *
+     * @param actionEvent zdarzenie kliknięcia przycisku
+     * @throws SQLException w przypadku błędu bazy danych
+     */
     @FXML
     public void handleSaveButton(ActionEvent actionEvent) throws SQLException {
         String question = questionText.getText();
@@ -286,10 +319,20 @@ public class AddQuestionController {
         ((Stage) saveButton.getScene().getWindow()).close();
     }
 
+    /**
+     * Zwraca utworzone lub edytowane pytanie.
+     *
+     * @return pytanie
+     */
     public Question getQuestion() {
         System.out.println("Question from ques " + q);
         return q; }
 
+    /**
+     * Wypełnia formularz pytaniem do edycji.
+     *
+     * @param selectedQuestion pytanie do edycji
+     */
     public void setEditingQuestion(Question selectedQuestion) {
         questionText.setText(selectedQuestion.getText());
         questionTypeComboBox.setValue(selectedQuestion.getType());
@@ -313,6 +356,11 @@ public class AddQuestionController {
         }
     }
 
+    /**
+     * Anuluje dodawanie pytania i zamyka formularz.
+     *
+     * @param actionEvent zdarzenie kliknięcia przycisku
+     */
     @FXML
     public void handleCancelButton(ActionEvent actionEvent) {
         q = null;

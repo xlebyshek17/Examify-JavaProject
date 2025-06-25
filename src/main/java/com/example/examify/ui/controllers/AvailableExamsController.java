@@ -14,8 +14,10 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Kontroler wyświetlający listę dostępnych egzaminów dla użytkownika.
+ */
 public class AvailableExamsController {
-
     @FXML
     private ListView<String> examListView;
 
@@ -23,11 +25,22 @@ public class AvailableExamsController {
     private List<Exam> exams;
     private final ExamService examService = new ExamService();
 
+    /**
+     * Ustawia użytkownika i ładuje listę egzaminów do wyświetlenia.
+     *
+     * @param user obiekt użytkownika
+     * @throws SQLException gdy wystąpi problem z bazą danych
+     */
     public void setUser(User user) throws SQLException {
         this.user = user;
         loadExams();
     }
 
+    /**
+     * Ładuje wszystkie dostępne egzaminy i wyświetla je w ListView.
+     *
+     * @throws SQLException gdy wystąpi problem z bazą danych
+     */
     private void loadExams() throws SQLException {
         exams = examService.getAllExams();
 
@@ -48,6 +61,11 @@ public class AvailableExamsController {
         });
     }
 
+    /**
+     * Uruchamia wybrany egzamin, przełączając scenę na widok egzaminu.
+     *
+     * @param selectedExam egzamin do rozpoczęcia
+     */
     private void startExam(Exam selectedExam) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -67,6 +85,9 @@ public class AvailableExamsController {
         }
     }
 
+    /**
+     * Obsługuje anulowanie i powrót do widoku głównego studenta.
+     */
     @FXML
     private void handleCancel() {
         try {

@@ -14,6 +14,10 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Kontroler widoku głównego dla użytkownika typu student.
+ * Zarządza wyświetlaniem powitania oraz przejściami do historii egzaminów i listy dostępnych egzaminów.
+ */
 public class StudentController {
 
     @FXML
@@ -24,11 +28,22 @@ public class StudentController {
 
     private User user;
 
+    /**
+     * Ustawia aktualnego użytkownika i aktualizuje etykietę powitania.
+     *
+     * @param user aktualny użytkownik
+     */
     public void setUser(User user) {
         this.user = user;
         welcomeLabel.setText("Witaj, " + user.getUsername() + "!");
     }
 
+    /**
+     * Obsługuje wylogowanie użytkownika i powrót do ekranu powitalnego.
+     *
+     * @param actionEvent zdarzenie akcji (kliknięcie przycisku)
+     * @throws IOException gdy nie uda się załadować widoku
+     */
     @FXML
     private void onButtonLogOutClick(ActionEvent actionEvent) throws IOException {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/examify/fxml/welcome-view.fxml")));
@@ -37,27 +52,9 @@ public class StudentController {
         stage.show();
     }
 
-    @FXML
-    private void startExam(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/exam-view.fxml"));
-            Parent root = loader.load();
-
-            // Przypisanie użytkownika
-            ExamController controller = loader.getController();
-            controller.setUser(user);     // ← przekazujemy
-            controller.startExam();       // ← uruchamiamy
-
-            // Wyświetlenie nowej sceny
-            Stage stage = (Stage) welcomeLabel.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Przechodzi do widoku historii egzaminów użytkownika.
+     */
     @FXML
     private void handleShowHistory() {
         try {
@@ -75,6 +72,9 @@ public class StudentController {
         }
     }
 
+    /**
+     * Przechodzi do widoku listy dostępnych egzaminów.
+     */
     @FXML
     private void handleShowAvailableExams() {
         try {

@@ -14,12 +14,22 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Kontroler logowania użytkownika.
+ * Obsługuje proces logowania, rejestracji oraz powrót do ekranu powitalnego.
+ */
 public class LoginController {
     public TextField loginField;
     public PasswordField passwordField;
     public Label errorField;
-    AuthService authService = new AuthService();
+    private final AuthService authService = new AuthService();
 
+    /**
+     * Obsługuje kliknięcie linku do rejestracji.
+     *
+     * @param event zdarzenie kliknięcia
+     * @throws IOException w przypadku błędu wczytywania FXML
+     */
     @FXML
     protected void onSignUpLinkClick(ActionEvent event) throws IOException {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/examify/fxml/signup-view.fxml")));
@@ -28,6 +38,13 @@ public class LoginController {
         stage.show();
     }
 
+    /**
+     * Obsługuje kliknięcie przycisku logowania.
+     * Loguje użytkownika i przełącza widok na odpowiedni ekran (admin lub student).
+     *
+     * @param event zdarzenie kliknięcia
+     * @throws IOException w przypadku błędu wczytywania FXML
+     */
     @FXML
     protected void onLogInButtonClick(ActionEvent event) throws IOException {
         String username = loginField.getText();
@@ -55,6 +72,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Obsługuje powrót do ekranu powitalnego.
+     *
+     * @param event zdarzenie kliknięcia
+     * @throws IOException w przypadku błędu wczytywania FXML
+     */
     @FXML
     protected void onBackButtonClick(ActionEvent event) throws IOException {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/examify/fxml/welcome-view.fxml")));

@@ -13,6 +13,10 @@ import javafx.util.Callback;
 
 import java.util.List;
 
+/**
+ * Kontroler widoku zarządzania użytkownikami przez administratora.
+ * Umożliwia przeglądanie listy użytkowników oraz nadawanie lub odbieranie uprawnień administratora.
+ */
 public class AdminUsersController {
     @FXML private TableView<User> userTable;
     @FXML private TableColumn<User, String> usernameColumn;
@@ -22,6 +26,9 @@ public class AdminUsersController {
 
     private final UserService userService = new UserService();
 
+    /**
+     * Inicjalizuje kolumny tabeli i ładuje użytkowników.
+     */
     @FXML
     public void initialize() {
         usernameColumn.prefWidthProperty().bind(userTable.widthProperty().multiply(0.25));
@@ -36,11 +43,18 @@ public class AdminUsersController {
         addButtonToTable();
     }
 
+    /**
+     * Wczytuje listę użytkowników z bazy danych i ustawia w tabeli.
+     */
     private void loadUsers() {
         List<User> users = userService.getAllUsers();
         userTable.getItems().setAll(users);
     }
 
+    /**
+     * Dodaje przycisk akcji do kolumny, umożliwiający zmianę statusu administratora.
+     * Tekst przycisku jest aktualizowany dynamicznie w zależności od bieżącego statusu.
+     */
     public void addButtonToTable() {
         actionColumn.setCellFactory(col -> new TableCell<>() {
             private final Button button = new Button();

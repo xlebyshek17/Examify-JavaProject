@@ -24,6 +24,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Kontroler widoku dodawania/edycji egzaminu.
+ * Pozwala na ustawienie podstawowych danych egzaminu oraz zarządzanie pytaniami.
+ */
 public class AddExamController {
 
     @FXML private Label msgError;
@@ -46,6 +50,9 @@ public class AddExamController {
 
     private Exam editingExam = null;
 
+    /**
+     * Inicjalizacja kontrolera – konfiguracja walidacji i tabeli.
+     */
     @FXML
     public void initialize() {
         saveButton.setDisable(true);
@@ -71,6 +78,11 @@ public class AddExamController {
         addActionsToTable();
     }
 
+    /**
+     * Sprawdza poprawność danych formularza egzaminu.
+     *
+     * @throws SQLException gdy wystąpi problem z połączeniem do bazy
+     */
     private void validateAll() throws SQLException {
         String n = examName.getText();
         String t = timeLimit.getText();
@@ -108,6 +120,12 @@ public class AddExamController {
         }
     }
 
+    /**
+     * Otwiera okno dodawania nowego pytania.
+     *
+     * @param actionEvent zdarzenie kliknięcia przycisku
+     * @throws IOException gdy nie uda się załadować widoku
+     */
     @FXML
     public void addQuestion(ActionEvent actionEvent) throws IOException {
         try {
@@ -130,6 +148,13 @@ public class AddExamController {
         }
     }
 
+    /**
+     * Zapisuje egzamin i powiązane pytania.
+     *
+     * @param actionEvent zdarzenie kliknięcia przycisku
+     * @throws SQLException gdy wystąpi problem z zapisem danych
+     * @throws IOException gdy nie uda się zamknąć okna
+     */
     @FXML
     public void saveExam(ActionEvent actionEvent) throws SQLException, IOException {
         String title = examName.getText();
@@ -159,10 +184,21 @@ public class AddExamController {
         parentController.refreshExamTable();
     }
 
+    /**
+     * Ustawia kontroler nadrzędny w celu późniejszego odświeżenia listy egzaminów.
+     *
+     * @param controller kontroler widoku listy egzaminów
+     */
     public void setParentController(AdminExamsController controller) {
         this.parentController = controller;
     }
 
+    /**
+     * Przełącza widok w tryb edycji i wczytuje dane istniejącego egzaminu.
+     *
+     * @param editingExam egzamin do edycji
+     * @throws SQLException gdy wystąpi błąd przy pobieraniu pytań
+     */
     public void setEditingExam(Exam editingExam) throws SQLException {
         this.editingExam = editingExam;
 
@@ -173,6 +209,9 @@ public class AddExamController {
         questionList.setAll(questionService.getQuestionsByExamId(editingExam.getId()));
     }
 
+    /**
+     * Dodaje do tabeli kolumnę z przyciskami edycji i usuwania pytań.
+     */
     private void addActionsToTable() {
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private final Button updateButton = new Button("Update");
@@ -208,6 +247,11 @@ public class AddExamController {
         });
     }
 
+    /**
+     * Usuwa pytanie z egzaminu i bazy danych.
+     *
+     * @param selectedQuestion pytanie do usunięcia
+     */
     private void handleDelete(Question selectedQuestion) {
         try {
             boolean success = questionService.deleteQuestion(selectedQuestion.getId());
@@ -221,6 +265,12 @@ public class AddExamController {
         }
     }
 
+    /**
+     * Otwiera formularz edycji pytania i aktualizuje je na liście.
+     *
+     * @param selectedQuestion pytanie do edycji
+     * @throws IOException gdy nie uda się załadować formularza
+     */
     private void handleUpdate(Question selectedQuestion) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/add_question-view.fxml"));
         Parent newRoot = loader.load();

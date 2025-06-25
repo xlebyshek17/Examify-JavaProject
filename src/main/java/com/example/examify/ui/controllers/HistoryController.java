@@ -16,6 +16,10 @@ import java.util.List;
 
 import static com.example.examify.dao.ExamResultDAO.getExamTitle;
 
+/**
+ * Kontroler widoku historii egzaminów użytkownika.
+ * Odpowiada za wyświetlanie listy wyników i obsługę przejścia do szczegółowego podglądu odpowiedzi.
+ */
 public class HistoryController {
 
     @FXML
@@ -23,14 +27,25 @@ public class HistoryController {
 
     private User user;
 
+    /** Formatowanie czasu do wyświetlenia w liście wyników */
     private static final DateTimeFormatter DATE_TIME_FMT =
             DateTimeFormatter.ofPattern("HH:mm:ss");
 
+    /**
+     * Ustawia aktualnego użytkownika i ładuje jego historię egzaminów.
+     *
+     * @param user aktualny użytkownik
+     */
     public void setUser(User user) {
         this.user = user;
         loadExams();
     }
 
+    /**
+     * Otwiera widok szczegółowej recenzji odpowiedzi dla wybranego egzaminu.
+     *
+     * @param examId identyfikator egzaminu
+     */
     private void openAnswerReview(int examId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/answer-review.fxml"));
@@ -46,7 +61,10 @@ public class HistoryController {
         }
     }
 
-
+    /**
+     * Ładuje wyniki egzaminów użytkownika do listy widoku.
+     * Ustawia również obsługę kliknięcia na wynik, aby wyświetlić szczegóły.
+     */
     private void loadExams() {
         List<ExamResult> exams = ExamResultDAO.getExamsByUserId(user.getId());
 
@@ -70,6 +88,9 @@ public class HistoryController {
 
     }
 
+    /**
+     * Obsługuje powrót do widoku użytkownika (StudentController).
+     */
     @FXML
     private void handleBack() {
         try {

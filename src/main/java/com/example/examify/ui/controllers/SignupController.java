@@ -19,6 +19,10 @@ import com.example.examify.util.FxErrorHelper;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Kontroler widoku rejestracji nowego użytkownika.
+ * Obsługuje walidację pól, rejestrację oraz nawigację do ekranu logowania lub powrotu.
+ */
 public class SignupController {
     @FXML private Button signUpButton;
     @FXML private TextField usernameField;
@@ -28,6 +32,10 @@ public class SignupController {
 
     private final AuthService authService = new AuthService();
 
+    /**
+     * Inicjalizacja kontrolera.
+     * Ustawia widoczność pola błędu i dodaje listener do walidacji formularza.
+     */
     public void initialize() {
         errorField.setVisible(false);
         signUpButton.setDisable(true);
@@ -39,6 +47,10 @@ public class SignupController {
         passwordField.textProperty().addListener(cl);
     }
 
+    /**
+     * Waliduje pola formularza rejestracji: username, email i hasło.
+     * Włącza lub wyłącza przycisk rejestracji oraz wyświetla komunikaty o błędach.
+     */
     private void validateAll() {
         String u = usernameField.getText();
         String e = emailField.getText();
@@ -77,6 +89,12 @@ public class SignupController {
         }
     }
 
+    /**
+     * Obsługuje powrót do ekranu powitalnego.
+     *
+     * @param event zdarzenie akcji (kliknięcie przycisku)
+     * @throws IOException gdy nie uda się załadować widoku
+     */
     @FXML
     protected void onButtonBackClick(ActionEvent event) throws IOException {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/examify/fxml/welcome-view.fxml")));
@@ -86,6 +104,13 @@ public class SignupController {
         stage.show();
     }
 
+    /**
+     * Obsługuje próbę rejestracji nowego użytkownika.
+     * Wyświetla komunikaty o błędach lub przechodzi do ekranu logowania po sukcesie.
+     *
+     * @param event zdarzenie akcji (kliknięcie przycisku)
+     * @throws IOException gdy nie uda się załadować widoku
+     */
     @FXML
     public void onButtonSignUpClick(ActionEvent event)  throws IOException {
         errorField.setVisible(true);

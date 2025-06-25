@@ -27,6 +27,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Kontroler widoku administratora do zarządzania egzaminami.
+ */
 public class AdminExamsController {
     @FXML private TableColumn<Exam, Integer> timeLimitColumn;
     @FXML private TableColumn<Exam, String> examNameColumn;
@@ -36,6 +39,11 @@ public class AdminExamsController {
 
     private final ExamService examService = new ExamService();
 
+    /**
+     * Inicjalizuje tabelę egzaminów oraz ustawia kolumny i akcje.
+     *
+     * @throws SQLException w przypadku błędu odczytu danych z bazy
+     */
     @FXML
     public void initialize() throws SQLException {
         examNameColumn.prefWidthProperty().bind(examTable.widthProperty().multiply(0.30));
@@ -51,6 +59,11 @@ public class AdminExamsController {
         addActionsToTable();
     }
 
+    /**
+     * Obsługuje usuwanie egzaminu z tabeli i bazy.
+     *
+     * @param selectedExam egzamin do usunięcia
+     */
     private void handleDelete(Exam selectedExam) {
         try {
             boolean success = examService.deleteExam(selectedExam.getId());
@@ -62,6 +75,13 @@ public class AdminExamsController {
         }
     }
 
+    /**
+     * Otwiera okno edycji istniejącego egzaminu.
+     *
+     * @param selectedExam egzamin do edycji
+     * @throws SQLException w przypadku błędu bazy danych
+     * @throws IOException w przypadku błędu ładowania widoku
+     */
     private void handleUpdate(Exam selectedExam) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/add_exam-view.fxml"));
         Parent newRoot = loader.load();
@@ -76,6 +96,12 @@ public class AdminExamsController {
         stage.showAndWait();
     }
 
+    /**
+     * Otwiera formularz dodawania nowego egzaminu.
+     *
+     * @param actionEvent zdarzenie kliknięcia przycisku
+     * @throws IOException w przypadku błędu ładowania widoku
+     */
     @FXML
     public void addExam(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/add_exam-view.fxml"));
@@ -90,11 +116,19 @@ public class AdminExamsController {
         stage.showAndWait();
     }
 
+    /**
+     * Odświeża dane w tabeli egzaminów, pobierając je z bazy.
+     *
+     * @throws SQLException w przypadku błędu pobierania danych
+     */
     public void refreshExamTable() throws SQLException {
         List<Exam> exams = examService.getAllExams();
         examTable.setItems(FXCollections.observableArrayList(exams));
     }
 
+    /**
+     * Dodaje przyciski akcji (Update/Delete) do każdej komórki kolumny "actions".
+     */
     private void addActionsToTable() {
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private final Button updateButton = new Button("Update");

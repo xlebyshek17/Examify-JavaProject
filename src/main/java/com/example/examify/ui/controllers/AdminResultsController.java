@@ -33,6 +33,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Kontroler widoku wyników egzaminów dla administratora.
+ * Wyświetla statystyki, tabelę wyników i wykres słupkowy.
+ */
 public class AdminResultsController {
     private final ExamService examService = new ExamService();
     private final ExamResultService examResultService = new ExamResultService();
@@ -55,6 +59,12 @@ public class AdminResultsController {
     @FXML private Label passPercentage;
     @FXML private Label averageDuration;
 
+    /**
+     * Inicjalizuje komponenty: kolumny tabeli, combo box z egzaminami,
+     * ustawienia siatki oraz reakcje na wybór egzaminu.
+     *
+     * @throws SQLException jeśli wystąpi błąd podczas pobierania danych z bazy
+     */
      public void initialize() throws SQLException {
          studentColumn.setPrefWidth(180);
          scoreColumn.setPrefWidth(180);
@@ -123,6 +133,12 @@ public class AdminResultsController {
          });
      }
 
+    /**
+     * Wyświetla wykres słupkowy przedstawiający rozkład ocen z danego egzaminu.
+     *
+     * @param examId ID wybranego egzaminu
+     * @throws SQLException jeśli wystąpi błąd podczas pobierania danych z bazy
+     */
     public void showScoreBandsBarChart(int examId) throws SQLException {
         int totalQuestions = questionService.getQuestionCountForExam(examId);
 

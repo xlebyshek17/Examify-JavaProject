@@ -13,20 +13,32 @@ import javafx.scene.Parent;
 
 import java.util.List;
 
+/**
+ * Kontroler do przeglądania odpowiedzi użytkownika na egzaminie.
+ * Wyświetla listę pytań wraz z udzielonymi odpowiedziami oraz informacją, czy odpowiedź była poprawna.
+ */
 public class AnswerReviewController {
-
     @FXML
     private ListView<String> answerListView;
 
     private int examId;
     private User user;
 
+    /**
+     * Ustawia dane egzaminu i użytkownika, a następnie ładuje odpowiedzi do widoku.
+     *
+     * @param examId identyfikator egzaminu
+     * @param user obiekt użytkownika
+     */
     public void setData(int examId, User user) {
         this.examId = examId;
         this.user = user;
         loadAnswers();
     }
 
+    /**
+     * Ładuje odpowiedzi z bazy dla danego egzaminu i wyświetla je w ListView.
+     */
     private void loadAnswers() {
         List<Answer> answers = AnswerDAO.getAnswersByExamId(examId);
 
@@ -44,6 +56,9 @@ public class AnswerReviewController {
         }
     }
 
+    /**
+     * Obsługuje powrót do widoku historii egzaminów użytkownika.
+     */
     @FXML
     private void handleBack() {
         try {

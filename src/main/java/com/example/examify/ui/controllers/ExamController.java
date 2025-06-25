@@ -21,28 +21,37 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Kontroler obsługujący przebieg egzaminu — wyświetlanie pytań, zbieranie odpowiedzi, odliczanie czasu,
+ * zapis wyniku i przejście do widoku wyników.
+ */
 public class ExamController {
-
-    // ===== pola wstrzykiwane z FXML =====
     @FXML private Label questionLabel;
-    @FXML private RadioButton optionA, optionB, optionC, optionD;
     @FXML private ToggleGroup optionsGroup;
     @FXML private Label progressLabel;
 
     @FXML private VBox singleChoiceBox, shortAnswerBox, trueFalseBox;
     @FXML private TextField shortAnswerField;
-    @FXML private RadioButton trueOption, falseOption;
     @FXML private ToggleGroup tfGroup;
-
 
     private LocalDateTime startTime;
     private List<Answer> givenAnswers = new ArrayList<>();
 
-    // ===== timer =====
     private int timeRemaining; // sekundy
     private Timeline timer;
     @FXML private Label timerLabel;
 
+    private User user;
+    private List<Question> questions;
+    private int index = 0;
+    private int score = 0;
+
+    private Exam exam;
+
+    /**
+     * Uruchamia timer odliczający czas egzaminu i aktualizujący etykietę z pozostałym czasem.
+     * Po wyczerpaniu czasu wywołuje automatyczne zakończenie egzaminu.
+     */
     private void startTimer() {
         timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeRemaining--;
@@ -57,6 +66,9 @@ public class ExamController {
         timer.play();
     }
 
+    /**
+     * Wywoływane automatycznie po wyczerpaniu czasu egzaminu — pokazuje alert informujący i kończy egzamin.
+     */
     private void autoFinishExam() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Koniec czasu");
@@ -66,36 +78,27 @@ public class ExamController {
         alert.show();
     }
 
-
-
-    // ===== logika =====
-    private User user;
-    private List<Question> questions;
-    private int index = 0;
-    private int score = 0;        // liczba poprawnych
-
-
-//    private User user;
-    private Exam exam;
-
+    /**
+     * Ustawia użytkownika oraz egzamin do przeprowadzenia.
+     *
+     * @param user  aktualny użytkownik
+     * @param exam  egzamin do przeprowadzenia
+     */
     public void setUserAndExam(User user, Exam exam) {
         this.user = user;
         this.exam = exam;
     }
 
-
-    // ===== API wywoływane z StudentController =====
-    public void setUser(User user) { this.user = user; }
+    /**
+     * Rozpoczyna egzamin: ustawia czas, pobiera pytania, przygotowuje interfejs i startuje timer.
+     */
     public void startExam() {
         startTime = LocalDateTime.now();
 
-        /* czas zgodnie z limitem egzaminu */
         timeRemaining = exam.getTime_limit_minutes() * 60;
 
-        /* pobierz wszystkie pytania przypisane do egzaminu */
         questions = QuestionDAO.getQuestionsForExam(exam.getId());
 
-        /* jeżeli baza ma więcej pytań niż zadeklarowano w exam.getQuestionCount() */
         if (questions.size() > exam.getQuestionCount()) {
             Collections.shuffle(questions);
             questions = questions.subList(0, exam.getQuestionCount());
@@ -106,7 +109,10 @@ public class ExamController {
 
     }
 
-    // ===== obsługa FXML =====
+    /**
+     * Obsługuje zdarzenie kliknięcia przycisku "Dalej" — pobiera wybraną odpowiedź, zapisuje ją,
+     * sprawdza poprawność, wyświetla kolejne pytanie lub kończy egzamin.
+     */
     @FXML
     private void handleNext() {
         Question q = questions.get(index);
@@ -149,21 +155,22 @@ public class ExamController {
         }
     }
 
-    // ===== pomocnicze =====
+    /**
+     * Wyświetla bieżące pytanie i odpowiedni typ odpowiedzi (jednokrotny wybór, prawda/fałsz, krótka odpowiedź).
+     */
     private void showQuestion() {
         Question q = questions.get(index);
         progressLabel.setText("Pytanie " + (index + 1) + " z " + questions.size());
         questionLabel.setText(q.getText());
 
-        // Ukryj wszystko
         singleChoiceBox.setVisible(false); singleChoiceBox.setManaged(false);
         shortAnswerBox.setVisible(false); shortAnswerBox.setManaged(false);
         trueFalseBox.setVisible(false);   trueFalseBox.setManaged(false);
 
         switch (q.getType()) {
             case SINGLE_CHOICE -> {
-                singleChoiceBox.getChildren().clear(); // wyczyść poprzednie opcje
-                optionsGroup.getToggles().clear();     // wyczyść grupę toggle
+                singleChoiceBox.getChildren().clear();
+                optionsGroup.getToggles().clear();
 
                 List<String> opts = new ArrayList<>(q.getOptionList());
                 Collections.shuffle(opts);
@@ -191,7 +198,10 @@ public class ExamController {
         }
     }
 
-
+    /**
+     * Kończy egzamin: zatrzymuje timer, zapisuje wynik i odpowiedzi do bazy,
+     * a następnie przełącza scenę na widok wyniku.
+     */
     private void finishExam() {
         try {
             if (timer != null) timer.stop();
@@ -206,7 +216,6 @@ public class ExamController {
                 AnswerDAO.saveAnswer(a);
             }
 
-            // Przejdź do widoku wyników
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/examify/fxml/result-view.fxml"));
             Parent root = loader.load();
 
