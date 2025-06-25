@@ -9,9 +9,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO do obsługi zapisów i odczytu odpowiedzi udzielonych przez użytkowników.
+ */
 public class AnswerDAO {
     private static final String DB_URL = "jdbc:sqlite:exams.db";
 
+    /**
+     * Zapisuje odpowiedź użytkownika do bazy danych.
+     *
+     * @param answer odpowiedź do zapisania
+     */
     public static void saveAnswer(Answer answer) {
         String sql = "INSERT INTO answers(exam_result_id, question_id, answer, is_correct) VALUES (?, ?, ?, ?)";
 
@@ -30,6 +38,13 @@ public class AnswerDAO {
         }
     }
 
+    /**
+     * Zwraca listę odpowiedzi powiązanych z konkretnym wynikiem egzaminu.
+     * Pobiera również dane pytania, aby umożliwić wyświetlanie podsumowania.
+     *
+     * @param examId identyfikator wyniku egzaminu
+     * @return lista odpowiedzi
+     */
     public static List<Answer> getAnswersByExamId(int examId) {
         List<Answer> answers = new ArrayList<>();
         String sql = """

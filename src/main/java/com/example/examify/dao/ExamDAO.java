@@ -9,7 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO do operacji na tabeli egzaminów.
+ */
 public class ExamDAO {
+    /**
+     * Pobiera wszystkie egzaminy z bazy danych.
+     *
+     * @return lista egzaminów
+     */
     public List<Exam> getAllExams() {
         List<Exam> exams = new ArrayList<>();
         String query = "SELECT * FROM exams";
@@ -26,6 +34,13 @@ public class ExamDAO {
         return exams;
     }
 
+    /**
+     * Zapisuje nowy egzamin i zwraca jego wygenerowane ID.
+     *
+     * @param exam egzamin do zapisania
+     * @return wygenerowane ID
+     * @throws SQLException jeśli wystąpi błąd SQL
+     */
     public int saveExam(Exam exam) throws SQLException {
         String query = "INSERT INTO exams(title, question_count, time_limit_minutes) VALUES (?, ?, ?)";
         int generatedId = -1;
@@ -50,6 +65,13 @@ public class ExamDAO {
         return generatedId;
     }
 
+    /**
+     * Aktualizuje dane istniejącego egzaminu.
+     *
+     * @param exam egzamin do aktualizacji
+     * @return zaktualizowane ID lub -1
+     * @throws SQLException jeśli wystąpi błąd SQL
+     */
     public int updateExam(Exam exam) throws SQLException {
         String query = "UPDATE exams SET title = ?, question_count = ?, time_limit_minutes = ? WHERE id = ?";
         int updatedId = -1;
@@ -69,6 +91,13 @@ public class ExamDAO {
         return updatedId;
     }
 
+    /**
+     * Wyszukuje egzamin po ID.
+     *
+     * @param id identyfikator egzaminu
+     * @return obiekt Exam, jeśli istnieje
+     * @throws SQLException jeśli wystąpi błąd SQL
+     */
     public Optional<Exam> findById(int id) throws SQLException {
         String query = "SELECT * FROM exams WHERE id = ?";
         try (Connection con = DBUtil.getConnection();
@@ -86,6 +115,13 @@ public class ExamDAO {
         return Optional.empty();
     }
 
+    /**
+     * Usuwa egzamin i jego pytania.
+     *
+     * @param id ID egzaminu
+     * @return true jeśli usunięto
+     * @throws SQLException jeśli wystąpi błąd
+     */
     public boolean deleteById(int id) throws SQLException {
         String delQ = "DELETE FROM questions WHERE exam_id = ?";
         String delE = "DELETE FROM exams WHERE id = ?";
@@ -112,6 +148,12 @@ public class ExamDAO {
         return false;
     }
 
+    /**
+     * Wyszukuje egzamin po tytule.
+     *
+     * @param title tytuł egzaminu
+     * @return obiekt Exam, jeśli znaleziony
+     */
     public Optional<Exam> findByTitle(String title) {
         String sql = "SELECT * FROM exams WHERE title = ?";
 
@@ -133,8 +175,13 @@ public class ExamDAO {
         return Optional.empty();
     }
 
-
-
+    /**
+     * Mapuje rekord z ResultSet na obiekt Exam.
+     *
+     * @param rs wynik zapytania SQL
+     * @return obiekt egzaminu
+     * @throws SQLException jeśli wystąpi błąd
+     */
     private Exam mapRowToExam(ResultSet rs) throws SQLException {
         return new Exam(rs.getInt("id"),
                 rs.getString("title"),

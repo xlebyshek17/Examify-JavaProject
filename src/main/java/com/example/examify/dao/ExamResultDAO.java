@@ -10,9 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO do obsługi wyników egzaminów i statystyk.
+ */
 public class ExamResultDAO {
     private static final String DB_URL = "jdbc:sqlite:exams.db";
 
+    /**
+     * Zapisuje wynik egzaminu do bazy.
+     *
+     * @param exam wynik egzaminu
+     * @return ID wygenerowanego rekordu
+     */
     public static int saveExam(ExamResult exam) {
         String sql = "INSERT INTO exam_results(user_id, exam_id, start_time, end_time, score) VALUES (?, ?, ?, ?, ?)";
         int generatedId = -1;
@@ -41,6 +50,12 @@ public class ExamResultDAO {
         return generatedId;
     }
 
+    /**
+     * Zwraca listę wyników dla danego użytkownika.
+     *
+     * @param userId ID użytkownika
+     * @return lista wyników
+     */
     public static List<ExamResult> getExamsByUserId(int userId) {
         List<ExamResult> exams = new ArrayList<>();
         String sql = "SELECT * FROM exam_results WHERE user_id = ? ORDER BY start_time DESC";
@@ -69,6 +84,12 @@ public class ExamResultDAO {
         return exams;
     }
 
+    /**
+     * Pobiera tytuł egzaminu po jego ID.
+     *
+     * @param examId identyfikator egzaminu
+     * @return tytuł egzaminu
+     */
     public static String getExamTitle(int examId) {
         String sql = "SELECT * FROM exams WHERE id = ?";
         String title = null;
@@ -89,6 +110,12 @@ public class ExamResultDAO {
         return title;
     }
 
+    /**
+     * Oblicza statystyki dla konkretnego egzaminu.
+     *
+     * @param examId ID egzaminu
+     * @return statystyki lub pusty obiekt
+     */
     public Optional<ExamStats> getStatsByExamId(int examId) {
         String sql = """
         WITH question_count AS (
@@ -136,6 +163,12 @@ public class ExamResultDAO {
         return Optional.empty();
     }
 
+    /**
+     * Pobiera wszystkie wyniki danego egzaminu.
+     *
+     * @param examId ID egzaminu
+     * @return lista wyników
+     */
     public List<ExamResult> getResultsForExam(int examId) {
         List<ExamResult> results = new ArrayList<>();
         String sql = "SELECT * FROM exam_results WHERE exam_id = ?";
@@ -163,6 +196,11 @@ public class ExamResultDAO {
         return results;
     }
 
+    /**
+     * Oblicza średni wynik ze wszystkich egzaminów.
+     *
+     * @return średnia punktacja
+     */
     public double getAverageScore() {
         String sql = "SELECT AVG(score) FROM exam_results";
         try (Connection conn = DBUtil.getConnection();
@@ -175,6 +213,11 @@ public class ExamResultDAO {
         }
     }
 
+    /**
+     * Liczy, ile egzaminów zakończyło się wynikiem powyżej progu zdawalności.
+     *
+     * @return liczba zdanych egzaminów
+     */
     public int countPassedExams() {
         String sql = """
         SELECT COUNT(*) FROM exam_results er
@@ -195,6 +238,11 @@ public class ExamResultDAO {
         }
     }
 
+    /**
+     * Zwraca całkowitą liczbę podejść do egzaminów.
+     *
+     * @return liczba podejść
+     */
     public int countAllAttempts() {
         String sql = "SELECT COUNT(*) FROM exam_results";
         try (Connection conn = DBUtil.getConnection();
@@ -207,6 +255,11 @@ public class ExamResultDAO {
         }
     }
 
+    /**
+     * Oblicza średni czas trwania egzaminów w minutach.
+     *
+     * @return średnia długość egzaminu
+     */
     public double getAverageDurationInMinutes() {
         String sql = """
         SELECT AVG((julianday(end_time) - julianday(start_time)) * 24 * 60)

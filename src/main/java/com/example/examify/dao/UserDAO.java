@@ -12,7 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO do operacji na użytkownikach (studenci i administratorzy).
+ */
 public class UserDAO {
+    /**
+     * Wyszukuje użytkownika po ID.
+     *
+     * @param id identyfikator użytkownika
+     * @return obiekt użytkownika (jeśli istnieje)
+     */
     public Optional<User> findById(int id) {
         String query = "SELECT id, username, email, password_hash, is_admin FROM users WHERE id = ?";
         try(Connection con = DBUtil.getConnection();
@@ -31,6 +40,12 @@ public class UserDAO {
         return Optional.empty();
     }
 
+    /**
+     * Wyszukuje użytkownika po loginie (nazwa lub e-mail).
+     *
+     * @param login nazwa użytkownika lub e-mail
+     * @return użytkownik (jeśli znaleziony)
+     */
     public Optional<User> findByLogin(String login) {
         String query = "SELECT id, username, email, password_hash, is_admin FROM users WHERE username = ? OR email = ?";
         try (Connection con = DBUtil.getConnection();
@@ -50,6 +65,12 @@ public class UserDAO {
         return Optional.empty();
     }
 
+    /**
+     * Zapisuje nowego użytkownika do bazy danych.
+     *
+     * @param user nowy użytkownik
+     * @return true jeśli zapisano poprawnie
+     */
     public boolean save(User user) {
         String query = "INSERT INTO users(username, email, password_hash, is_admin) VALUES(?, ?, ?, ?)";
         try (Connection con = DBUtil.getConnection();
@@ -74,6 +95,13 @@ public class UserDAO {
         return false;
     }
 
+    /**
+     * Mapuje wynik zapytania SQL na obiekt użytkownika.
+     *
+     * @param rs wynik z bazy danych
+     * @return obiekt User
+     * @throws SQLException jeśli wystąpi błąd SQL
+     */
     private User mapRowtoUser(ResultSet rs) throws SQLException {
         return new User(rs.getInt("id"),
                         rs.getString("username"),
@@ -82,6 +110,11 @@ public class UserDAO {
                         rs.getBoolean("is_admin"));
     }
 
+    /**
+     * Pobiera wszystkich użytkowników (studentów i adminów).
+     *
+     * @return lista użytkowników
+     */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
@@ -102,6 +135,12 @@ public class UserDAO {
         return users;
     }
 
+    /**
+     * Ustawia lub odbiera uprawnienia administratora dla użytkownika.
+     *
+     * @param userId ID użytkownika
+     * @param isAdmin true jeśli ma być adminem
+     */
     public void updateAdminStatus(int userId, boolean isAdmin) {
         String sql = "UPDATE users SET is_admin = ? WHERE id = ?";
         try (Connection con = DBUtil.getConnection();
@@ -114,6 +153,11 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Zwraca liczbę użytkowników niebędących administratorami.
+     *
+     * @return liczba studentów
+     */
     public int countAllStudents() {
         String sql = "SELECT COUNT(*) FROM users WHERE is_admin = 0";
         try (Connection conn = DBUtil.getConnection();
